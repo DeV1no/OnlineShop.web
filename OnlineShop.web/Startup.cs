@@ -28,7 +28,8 @@ namespace OnlineShop.web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(option => option.EnableEndpointRouting = false);
+
 
 
             #region DataBase Context
@@ -50,7 +51,8 @@ namespace OnlineShop.web
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
+          
+            app.UseMvcWithDefaultRoute();
             app.UseStaticFiles();
 
             app.Run(async (context) =>

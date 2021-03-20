@@ -5,9 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\OnlineShop.Core\OnlineShop.Core.csproj" />
-      <ProjectReference Include="..\OnlineShop.DataLayer\OnlineShop.DataLayer.csproj" />
-
+     
     </ItemGroup>
 
     <ItemGroup>
