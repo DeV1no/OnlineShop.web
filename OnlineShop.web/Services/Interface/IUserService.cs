@@ -1,4 +1,5 @@
 using OnlineShop.DataLayer.Entities.User;
+using OnlineShop.web.DTOs;
 
 namespace OnlineShop.web.Services.Interface
 {
@@ -7,5 +8,6 @@ namespace OnlineShop.web.Services.Interface
         bool isExistUserName(string userName);
         bool isExistEmail(string email);
         int AddUser(User user);
+        User LoginUser(AccountViewModel.LoginViewModel login);
     }
 }

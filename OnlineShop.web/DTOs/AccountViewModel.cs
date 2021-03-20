@@ -4,6 +4,7 @@ namespace OnlineShop.web.DTOs
 {
     public class AccountViewModel
     {
+        //register view model
         public class RegisterViewModel
         {
             [Display(Name = "نام کاربری")]
@@ -23,6 +24,24 @@ namespace OnlineShop.web.DTOs
             [Required(ErrorMessage = " لطفا {0} را وارد کنید")]
             [Compare("Password", ErrorMessage = "رمز های عبور مغایرت دارند")]
             public string RePassword { get; set; }
+        }
+
+        //login view model
+
+        public class LoginViewModel
+        {
+            [Display(Name = " پست الکترونیکی")]
+            [Required(ErrorMessage = " لطفا {0} را وارد کنید")]
+            [EmailAddress(ErrorMessage = "ایمیل وارد شده معتبر نمیباشد")]
+            public string Email { get; set; }
+
+            [Display(Name = " رمز عبور")]
+            [Required(ErrorMessage = " لطفا {0} را وارد کنید")]
+            public string Password { get; set; }
+
+            [Display(Name = " مرا به خاطر بسپار")]
+          
+            public bool RememberMe { get; set; }
         }
     }
 }
