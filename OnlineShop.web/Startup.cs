@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OnlineShop.DataLayer.Context;
+using OnlineShop.web.Services;
+using OnlineShop.web.Services.Interface;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace OnlineShop.web
@@ -29,9 +31,7 @@ namespace OnlineShop.web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(option => option.EnableEndpointRouting = false);
-
-
-
+            
             #region DataBase Context
 
             services.AddDbContext<OnlineShopeContext>(opt =>
@@ -39,6 +39,12 @@ namespace OnlineShop.web
                 opt.UseMySql(Configuration.GetConnectionString("MariaDbConnection"),
                     new MariaDbServerVersion(new System.Version(10, 5, 0)));
             });
+
+            #endregion
+
+            #region IOC
+
+            services.AddTransient<IUserService, UserService>();
 
             #endregion
         }
@@ -51,14 +57,11 @@ namespace OnlineShop.web
                 app.UseDeveloperExceptionPage();
             }
 
-          
+
             app.UseMvcWithDefaultRoute();
             app.UseStaticFiles();
 
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
+            app.Run(async (context) => { await context.Response.WriteAsync("Hello World!"); });
         }
     }
 }

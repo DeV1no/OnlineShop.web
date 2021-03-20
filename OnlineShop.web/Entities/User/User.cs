@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -31,7 +32,7 @@ namespace OnlineShop.DataLayer.Entities.User
 
         [Display(Name = "نمایه")] public string UserAvatar { get; set; }
 
-        [Display(Name = "تاریخ ثبت نام")] public string RegisterDate { get; set; }
+        [Display(Name = "تاریخ ثبت نام")] public DateTime RegisterDate { get; set; }
 
         #region Relationship
 
