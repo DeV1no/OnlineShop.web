@@ -99,5 +99,12 @@ namespace OnlineShop.web.Controllers
             // TODO: Send Activate Email
             return View("SuccessRegister", user);
         }
+
+        //active Account
+        public IActionResult ActiveAccount(string id)
+        {
+            ViewBag.IsActive = _userService.ActiveAccount(id);
+            return View();
+        }
     }
 }
