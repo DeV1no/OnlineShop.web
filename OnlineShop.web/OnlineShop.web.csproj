@@ -22,6 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Senders" />
       <Folder Include="wwwroot\UserAvatar" />
     </ItemGroup>
 

@@ -1,0 +1,14 @@
+@model  OnlineShop.DataLayer.Entities.User.User
+
+<div style="direction: rtl;padding: 20px">
+    <h2>
+        @Model.UserName
+        عزیز !
+    </h2>
+    <p>
+        ثبت نام شما در آنلاین شاپ انجام شده است برای وارد شدن به حساب کاربری خود ابتدا باید حساب خود را فعال کنید
+    </p>
+    <p>
+        <a href="http://localhost:5000/account/ActiveAccount/@Model.ActiveCode">فعال سازی کاربری</a>
+    </p>
+</div>

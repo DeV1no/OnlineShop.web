@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OnlineShop.DataLayer.Context;
+using OnlineShop.web.Convertor;
 using OnlineShop.web.Services;
 using OnlineShop.web.Services.Interface;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
@@ -46,6 +47,7 @@ namespace OnlineShop.web
             #region IOC
 
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IViewRenderService, RenderViewToString>();
 
             #endregion
 

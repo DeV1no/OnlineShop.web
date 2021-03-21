@@ -43,6 +43,22 @@ namespace OnlineShop.web.Services
             return _context.Users.SingleOrDefault(u => u.Email == email && u.Password == hashPassword);
         }
 
+        public User GetUserByEmail(string email)
+        {
+            return _context.Users.SingleOrDefault(u => u.Email == email);
+        }
+
+        public User GetUserByActiveCode(string activeCode)
+        {
+            return _context.Users.SingleOrDefault(u => u.ActiveCode == activeCode);
+        }
+
+        public void UpdateUser(User user)
+        {
+            _context.Update(user);
+            _context.SaveChanges();
+        }
+
         public bool ActiveAccount(string activeCode)
         {
             var user = _context.Users.SingleOrDefault(u => u.ActiveCode == activeCode);

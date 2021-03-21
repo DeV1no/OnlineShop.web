@@ -4,12 +4,12 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using OnlineShop.DataLayer.Entities.User;
 using OnlineShop.web.Convertor;
 using OnlineShop.web.DTOs;
 using OnlineShop.web.Generrator;
 using OnlineShop.web.Security;
+using OnlineShop.Web.SendEmail;
 using OnlineShop.web.Services;
 using OnlineShop.web.Services.Interface;
 
@@ -18,10 +18,12 @@ namespace OnlineShop.web.Controllers
     public class AccountController : Controller
     {
         private IUserService _userService;
+        private IViewRenderService _viewRenderService;
 
-        public AccountController(IUserService userService)
+        public AccountController(IUserService userService, IViewRenderService viewRenderService)
         {
             _userService = userService;
+            _viewRenderService = viewRenderService;
         }
 
         // Login Controll
@@ -111,7 +113,9 @@ namespace OnlineShop.web.Controllers
                 UserName = register.UserName
             };
             _userService.AddUser(user);
-            // TODO: Send Activate Email
+            // Active email 
+            string body = _viewRenderService.RenderToStringAsync("_ActiveEmail", user);
+            SendEmail.Send(user.Email, "فعالسازی", body);
             return View("SuccessRegister", user);
         }
 
@@ -127,6 +131,63 @@ namespace OnlineShop.web.Controllers
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Redirect("/login");
+        }
+
+        //ForGot Password 
+        [Route("ForgotPassword")]
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("ForgotPassword")]
+        public ActionResult ForgotPassword(AccountViewModel.ForgotPasswordViewModel forgot)
+        {
+            if (!ModelState.IsValid)
+                return View(forgot);
+
+            string fixedEmail = FixText.FixEmail(forgot.Email);
+            DataLayer.Entities.User.User user = _userService.GetUserByEmail(fixedEmail);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("Email", "کاربری یافت نشد");
+                return View(forgot);
+            }
+
+            string bodyEmail = _viewRenderService.RenderToStringAsync("_ForgotPassword", user);
+            SendEmail.Send(user.Email, "بازیابی حساب کاربری", bodyEmail);
+            ViewBag.IsSuccess = true;
+
+            return View();
+        }
+
+        //Reset Password
+        public ActionResult ResetPassword(string id)
+        {
+            return View(new AccountViewModel.ResetPasswordViewModel()
+            {
+                ActiveCode = id
+            });
+        }
+
+        [HttpPost]
+        public ActionResult ResetPassword(AccountViewModel.ResetPasswordViewModel reset)
+        {
+            if (!ModelState.IsValid)
+                return View(reset);
+            DataLayer.Entities.User.User user = _userService.GetUserByActiveCode(reset.ActiveCode);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            string hashNewPassword = PasswordHelper.EncodePasswordMd5(reset.Password);
+            user.Password = hashNewPassword;
+            _userService.UpdateUser(user);
             return Redirect("/login");
         }
     }
