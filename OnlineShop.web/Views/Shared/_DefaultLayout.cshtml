@@ -25,14 +25,27 @@
                 </div>
                 <div class="col-sm-6 col-xs-12">
                     <div class="clientarea">
-                        <div class="loggein hidden">
-                            <i class="zmdi zmdi-account"></i><a href=""> دانیال شکوه منش، خوش آمدی </a>
-                        </div>
-                        <div class="signin">
-                            <i class="zmdi zmdi-account"></i>
-                            <a href=""> ورود </a> /
-                            <a href=""> عضویت </a>
-                        </div>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="loggein ">
+                                <i class="zmdi zmdi-account"></i>
+                                <a href="">
+                                    @User.Identity.Name
+                                    عزیز
+                                    ، خوش آمدی
+                                </a>/
+                                <a href="/Logout"> خروج </a> 
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="signin">
+                                <i class="zmdi zmdi-account"></i>
+                                <a href="/login"> ورود </a> /
+                                <a href="/register"> عضویت </a>
+                            </div>
+                        }
+
                     </div>
                 </div>
             </div>

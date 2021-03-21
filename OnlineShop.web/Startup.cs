@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,7 +32,7 @@ namespace OnlineShop.web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(option => option.EnableEndpointRouting = false);
-            
+
             #region DataBase Context
 
             services.AddDbContext<OnlineShopeContext>(opt =>
@@ -47,6 +48,23 @@ namespace OnlineShop.web
             services.AddTransient<IUserService, UserService>();
 
             #endregion
+
+            #region Authentication
+
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                }).AddCookie(options =>
+                {
+                    options.LoginPath = "/login";
+                    options.LogoutPath = "/Logout";
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(43200);
+                })
+                ;
+
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,9 +75,9 @@ namespace OnlineShop.web
                 app.UseDeveloperExceptionPage();
             }
 
-
-            app.UseMvcWithDefaultRoute();
             app.UseStaticFiles();
+            app.UseAuthentication();
+            app.UseMvcWithDefaultRoute();
 
             app.Run(async (context) => { await context.Response.WriteAsync("Hello World!"); });
         }
