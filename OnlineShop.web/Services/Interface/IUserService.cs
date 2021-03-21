@@ -11,7 +11,12 @@ namespace OnlineShop.web.Services.Interface
         User LoginUser(AccountViewModel.LoginViewModel login);
         User GetUserByEmail(string email);
         User GetUserByActiveCode(string activeCode);
+        User GetUserByUserName(string userName);
         void UpdateUser(User user);
+
         bool ActiveAccount(string activeCode);
+
+        // user panel
+        UserPanelViewModel.InformationUserViewModel GetUserInformation(string username);
     }
 }

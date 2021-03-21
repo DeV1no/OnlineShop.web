@@ -53,6 +53,11 @@ namespace OnlineShop.web.Services
             return _context.Users.SingleOrDefault(u => u.ActiveCode == activeCode);
         }
 
+        public User GetUserByUserName(string userName)
+        {
+            return _context.Users.SingleOrDefault(u => u.UserName == userName);
+        }
+
         public void UpdateUser(User user)
         {
             _context.Update(user);
@@ -68,6 +73,18 @@ namespace OnlineShop.web.Services
             user.ActiveCode = NameGenerator.GenerateUniqCode();
             _context.SaveChanges();
             return true;
+        }
+
+        public UserPanelViewModel.InformationUserViewModel GetUserInformation(string username)
+        {
+            var user = GetUserByUserName(username);
+            UserPanelViewModel.InformationUserViewModel information =
+                new UserPanelViewModel.InformationUserViewModel();
+            information.UserName = user.UserName;
+            information.Email = user.Email;
+            information.RegisterDate = user.RegisterDate;
+            information.Wallet = 0;
+            return information;
         }
     }
 }
