@@ -86,5 +86,16 @@ namespace OnlineShop.web.Services
             information.Wallet = 0;
             return information;
         }
+
+        public UserPanelViewModel.SideBarUserPanelViewModel GetSideBarUserPanelData(string username)
+        {
+            return _context.Users.Where(u => u.UserName == username).Select(u =>
+                new UserPanelViewModel.SideBarUserPanelViewModel
+                {
+                    UserName = u.UserName,
+                    ImageName = u.UserAvatar,
+                    RegisterDate = u.RegisterDate
+                }).Single();
+        }
     }
 }
