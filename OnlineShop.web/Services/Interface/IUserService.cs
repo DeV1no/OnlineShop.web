@@ -19,5 +19,7 @@ namespace OnlineShop.web.Services.Interface
         // user panel
         UserPanelViewModel.InformationUserViewModel GetUserInformation(string username);
         UserPanelViewModel.SideBarUserPanelViewModel GetSideBarUserPanelData(string username);
+        UserPanelViewModel.EditProfileViewModel GetDataForEditProfileUser(string username);
+        void EditProfile(string username, UserPanelViewModel.EditProfileViewModel profile);
     }
 }

@@ -28,8 +28,9 @@ namespace OnlineShop.web.Controllers
 
         // Login Controll
         [Route("Login")]
-        public IActionResult Login()
+        public IActionResult Login(bool EditProfile = false)
         {
+            ViewBag.EditProfile = EditProfile;
             return View();
         }
 

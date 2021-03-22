@@ -1,3 +1,4 @@
+@using System.Net.Http
 @model OnlineShop.web.DTOs.AccountViewModel.LoginViewModel
 
 @{
@@ -16,18 +17,24 @@
 <main class="client-page">
     <div class="container-content">
 
-         @if (ViewBag.IsSuccess != null)
-                {
-                    <div class="alert alert-success">
-                        <p class="help-block">ورود با موفقیت انجام شد</p>
-                    </div>
-        
-                    <script>
+        @if (ViewBag.IsSuccess != null)
+        {
+            <div class="alert alert-success">
+                <p class="help-block">ورود با موفقیت انجام شد</p>
+            </div>
+
+            <script>
                         // Your delay in milliseconds
                         var delay = 3000; 
                         setTimeout(function () { window.location = "/"; }, delay);
                     </script>
-                }
+        }
+        @if (ViewBag.EditProfile ==true)
+        {
+            <div class="alert alert-warning">
+                به دلیل ویرایش پروفایل و بارگذاری مجدد اطلاعت لطفا مجددا وارد شوید
+            </div>
+        }
         <header>
             <h2> ورود به سایت </h2>
         </header>

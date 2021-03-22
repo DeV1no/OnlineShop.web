@@ -1,3 +1,4 @@
+using System.IO;
 using System.Linq;
 using OnlineShop.DataLayer.Context;
 using OnlineShop.DataLayer.Entities.User;
@@ -96,6 +97,45 @@ namespace OnlineShop.web.Services
                     ImageName = u.UserAvatar,
                     RegisterDate = u.RegisterDate
                 }).Single();
+        }
+
+        public UserPanelViewModel.EditProfileViewModel GetDataForEditProfileUser(string username)
+        {
+            return _context.Users.Where(u => u.UserName == username).Select(u =>
+                new UserPanelViewModel.EditProfileViewModel()
+                {
+                    AvatarName = u.UserAvatar,
+                    Email = u.Email,
+                    UserName = u.UserName,
+                }).Single();
+        }
+
+        public void EditProfile(string username, UserPanelViewModel.EditProfileViewModel profile)
+        {
+            if (profile.UserAvatar != null)
+            {
+                string imagePath = "";
+
+                if (profile.AvatarName != "Defult.jpg")
+                {
+                    imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/UserAvatar", profile.AvatarName);
+                    if (File.Exists(imagePath))
+                        File.Delete(imagePath);
+                }
+
+                profile.AvatarName = NameGenerator.GenerateUniqCode() + Path.GetExtension(profile.UserAvatar.FileName);
+                imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/UserAvatar", profile.AvatarName);
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    profile.UserAvatar.CopyTo(stream);
+                }
+            }
+
+            var user = GetUserByUserName(username);
+            user.UserName = profile.UserName;
+            user.Email = profile.Email;
+            user.UserAvatar = profile.AvatarName;
+            UpdateUser(user);
         }
     }
 }
