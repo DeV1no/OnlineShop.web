@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShop.DataLayer.Context;
 
 namespace OnlineShop.web.Migrations
 {
     [DbContext(typeof(OnlineShopeContext))]
-    partial class OnlineShopeContextModelSnapshot : ModelSnapshot
+    [Migration("20210323084422_waletTable")]
+    partial class waletTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,11 +114,14 @@ namespace OnlineShop.web.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("WalletTypeTypeId")
+                        .HasColumnType("int");
+
                     b.HasKey("WalletId");
 
-                    b.HasIndex("TypeId");
-
                     b.HasIndex("UserId");
+
+                    b.HasIndex("WalletTypeTypeId");
 
                     b.ToTable("Wallet");
                 });
@@ -156,21 +161,19 @@ namespace OnlineShop.web.Migrations
 
             modelBuilder.Entity("OnlineShop.web.Entities.Wallet.Wallet", b =>
                 {
-                    b.HasOne("OnlineShop.web.Entities.Wallet.WalletType", "Type")
-                        .WithMany("Wallet")
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("OnlineShop.DataLayer.Entities.User.User", "User")
                         .WithMany("Wallet")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Type");
+                    b.HasOne("OnlineShop.web.Entities.Wallet.WalletType", "WalletType")
+                        .WithMany("Wallet")
+                        .HasForeignKey("WalletTypeTypeId");
 
                     b.Navigation("User");
+
+                    b.Navigation("WalletType");
                 });
 
             modelBuilder.Entity("OnlineShop.DataLayer.Entities.User.Role", b =>

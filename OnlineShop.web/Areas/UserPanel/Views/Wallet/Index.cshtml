@@ -1,0 +1,91 @@
+@using OnlineShop.web.Convertor
+@using OnlineShop.web.DTOs
+@model OnlineShop.web.DTOs.WalletViewModel.WalletChargeViewModle
+@{
+    ViewData["Title"] = "کیف پول شما";
+}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">آنلاین شاپ</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page"> کیف پول شما </li>
+        </ul>
+    </nav>
+</div>
+
+
+<main class="container">
+    <div class="user-account">
+        <div class="row">
+            <partial name="_SideBar"/>
+            <div class="col-md-9 col-sm-8 col-xs-12">
+                <section class="user-account-content">
+                    <header>
+                        <h1> کیف پول شما</h1>
+                    </header>
+                    <div class="inner form-layer">
+                        <form asp-action="Index" method="post">
+                            <input type="hidden"/>
+                            <div class="row">
+                                <div class="col-md-7 col-sm-8 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="username">
+                                            <i class="zmdi zmdi-money"></i>
+                                        </span>
+                                        <input type="number" class="form-control" asp-for="Amount" placeholder="مبلغ به ریال" aria-describedby="username">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-7 col-sm-8 col-xs-12">
+                                    <button class="btn btn-success"> شارژ کیف پول </button>
+                                </div>
+                            </div>
+                        </form>
+                        <hr>
+                        @{
+                            List<WalletViewModel.WalletReportViewModel> List =
+                                ViewBag.ListWallet as List<WalletViewModel.WalletReportViewModel>;
+                        }
+                        <table class="table table-bordered table-dark">
+                            <tr>
+                                <th>مبلغ</th>
+                                <th>تاریخ </th>
+                                <th>نوع تراکنش</th>
+                                <th>شرح</th>
+                            </tr>
+                            @foreach (var l in List)
+                            {
+                                <tr>
+                                    <td>
+                                        @l.Amount.ToString("#,0 تومان ")
+                                    </td>
+                                    <td>
+                                        @l.DateTime.ToShamsi()
+                                    </td>
+                                    <td>
+                                        @if (l.Type == 1)
+                                        {
+                                            <pc class="text-success">واریز به حساب</pc>
+                                        }
+                                        else
+                                        {
+                                            <pc class="text-danger">برداشت از حساب</pc>
+                                        }
+                                    </td>
+                                    <td>
+                                        @l.Description
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+
+                </section>
+            </div>
+        </div>
+    </div>
+
+
+</main>

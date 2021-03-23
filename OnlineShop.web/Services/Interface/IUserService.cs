@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using OnlineShop.DataLayer.Entities.User;
 using OnlineShop.web.DTOs;
+using OnlineShop.web.Entities.Wallet;
 
 namespace OnlineShop.web.Services.Interface
 {
@@ -12,6 +14,7 @@ namespace OnlineShop.web.Services.Interface
         User GetUserByEmail(string email);
         User GetUserByActiveCode(string activeCode);
         User GetUserByUserName(string userName);
+        int GetUserIdByUserName(string userName);
         void UpdateUser(User user);
 
         bool ActiveAccount(string activeCode);
@@ -23,5 +26,11 @@ namespace OnlineShop.web.Services.Interface
         void EditProfile(string username, UserPanelViewModel.EditProfileViewModel profile);
         bool CompareOldPassword(string oldPassword, string username);
         void ChangeUserPassword(string username, string newPassword);
+
+        // Wallet Service
+        int BalanceUserWallet(string username);
+        List<WalletViewModel.WalletReportViewModel> GetWalletUser(string username);
+        void ChargeWallet(string username, int amount, string description, bool isPay = false);
+        void AddWallet(Wallet wallet);
     }
 }

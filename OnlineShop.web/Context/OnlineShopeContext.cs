@@ -1,6 +1,6 @@
-
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.DataLayer.Entities.User;
+using OnlineShop.web.Entities.Wallet;
 
 namespace OnlineShop.DataLayer.Context
 {
@@ -8,7 +8,6 @@ namespace OnlineShop.DataLayer.Context
     {
         public OnlineShopeContext(DbContextOptions<OnlineShopeContext> options) : base(options)
         {
-
         }
 
         #region User
@@ -17,6 +16,12 @@ namespace OnlineShop.DataLayer.Context
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
 
+        #endregion
+
+        #region Wallet
+
+        public DbSet<WalletType> WalletTypes { get; set; }
+        public DbSet<Wallet> Wallet { get; set; }
 
         #endregion
     }
