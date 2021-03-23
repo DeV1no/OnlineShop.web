@@ -19,12 +19,11 @@
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
         <PackageReference Include="ZarinPalSandbox" Version="2.0.4" />
-
     </ItemGroup>
 
     <ItemGroup>
         <Folder Include="Senders" />
+        <Folder Include="wwwroot\AdminContent" />
         <Folder Include="wwwroot\UserAvatar" />
     </ItemGroup>
-
 </Project>
