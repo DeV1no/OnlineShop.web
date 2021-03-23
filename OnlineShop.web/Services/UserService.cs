@@ -137,5 +137,18 @@ namespace OnlineShop.web.Services
             user.UserAvatar = profile.AvatarName;
             UpdateUser(user);
         }
+
+        public bool CompareOldPassword(string oldPassword, string username)
+        {
+            string hashOldPassword = PasswordHelper.EncodePasswordMd5(oldPassword);
+            return _context.Users.Any(u => u.UserName == username && u.Password == hashOldPassword);
+        }
+
+        public void ChangeUserPassword(string username, string newPassword)
+        {
+            var user = GetUserByUserName(username);
+            user.Password = PasswordHelper.EncodePasswordMd5(newPassword);
+            UpdateUser(user);
+        }
     }
 }

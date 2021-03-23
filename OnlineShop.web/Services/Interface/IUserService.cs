@@ -21,5 +21,7 @@ namespace OnlineShop.web.Services.Interface
         UserPanelViewModel.SideBarUserPanelViewModel GetSideBarUserPanelData(string username);
         UserPanelViewModel.EditProfileViewModel GetDataForEditProfileUser(string username);
         void EditProfile(string username, UserPanelViewModel.EditProfileViewModel profile);
+        bool CompareOldPassword(string oldPassword, string username);
+        void ChangeUserPassword(string username, string newPassword);
     }
 }

@@ -37,5 +37,30 @@ namespace OnlineShop.web.Areas.UserPanel.Controllers
             _userService.EditProfile(User.Identity.Name, profile);
             return Redirect("/login?EditProfile=true");
         }
+
+        //change password 
+        [Route("userPanel/changePassword")]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [Route("userPanel/changePassword")]
+        [HttpPost]
+        public IActionResult ChangePassword(UserPanelViewModel.ChangePasswordViewModel change)
+        {
+            string currentUserName = User.Identity.Name;
+            if (!ModelState.IsValid)
+                return View(change);
+            if (!_userService.CompareOldPassword(change.OldPassword, currentUserName))
+            {
+                ModelState.AddModelError("OldPassword", "کلمه عبور قبلی وارد شده مغایرت دارد ");
+                return View(change);
+            }
+
+            _userService.ChangeUserPassword(currentUserName, change.Password);
+            ViewBag.IsSuccess = true;
+            return View();
+        }
     }
 }

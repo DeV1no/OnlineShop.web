@@ -35,5 +35,21 @@ namespace OnlineShop.web.DTOs
             public IFormFile UserAvatar { get; set; }
             public string AvatarName { get; set; }
         }
+
+        public class ChangePasswordViewModel
+        {
+            [Display(Name = " کلمه عبور فعلی ")]
+            [Required(ErrorMessage = " لطفا {0} را وارد کنید")]
+            public string OldPassword { get; set; }
+
+            [Display(Name = " رمز عبور")]
+            [Required(ErrorMessage = " لطفا {0} را وارد کنید")]
+            public string Password { get; set; }
+
+            [Display(Name = " تکرار رمز عبور")]
+            [Required(ErrorMessage = " لطفا {0} را وارد کنید")]
+            [Compare("Password", ErrorMessage = "رمز های عبور مغایرت دارند")]
+            public string RePassword { get; set; }
+        }
     }
 }
