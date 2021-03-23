@@ -30,7 +30,9 @@ namespace OnlineShop.web.Services.Interface
         // Wallet Service
         int BalanceUserWallet(string username);
         List<WalletViewModel.WalletReportViewModel> GetWalletUser(string username);
-        void ChargeWallet(string username, int amount, string description, bool isPay = false);
-        void AddWallet(Wallet wallet);
+        int ChargeWallet(string username, int amount, string description, bool isPay = false);
+        int AddWallet(Wallet wallet);
+        Wallet GetWaletByWalletId(int walletId);
+        void UpdateWallet(Wallet wallet);
     }
 }
