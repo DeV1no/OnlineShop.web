@@ -15,7 +15,7 @@ namespace OnlineShop.web.Services
             _context = context;
         }
 
-        public List<Role> GetRoles()
+        public  List<Role> GetRoles()
         {
             return _context.Roles.ToList();
         }
@@ -32,6 +32,16 @@ namespace OnlineShop.web.Services
             }
 
             _context.SaveChanges();
+        }
+
+        public void EditRolesUser(int userId, List<int> roleId)
+        {
+            // Delete all roles
+            _context.UserRoles.Where(r=>r.UserId==userId).ToList()
+                .ForEach(r=>_context.UserRoles.Remove(r));
+            
+            //Add new roles
+            AddRolesToUser(roleId, userId);
         }
     }
 }

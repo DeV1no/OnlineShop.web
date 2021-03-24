@@ -30,7 +30,14 @@ namespace OnlineShop.web.DTOs
             public string Password { get; set; }
 
             public IFormFile UserAvatar { get; set; }
-          //  public List<int> SelectedRoles { get; set; }
+            //  public List<int> SelectedRoles { get; set; }
+        }
+
+        public class EditUserViewModel : CreateUserViewModel
+        {
+            public int UserId { get; set; }
+            public List<int> UserRoles { get; set; }
+            public string AvatarName { get; set; }
         }
     }
 }

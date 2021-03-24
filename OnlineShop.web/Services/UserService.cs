@@ -8,6 +8,7 @@ using OnlineShop.web.Convertor;
 using OnlineShop.web.DTOs;
 using OnlineShop.web.Entities.Wallet;
 using OnlineShop.web.Generrator;
+using OnlineShop.web.Pages.Admin.Users;
 using OnlineShop.web.Security;
 using OnlineShop.web.Services.Interface;
 
@@ -50,6 +51,11 @@ namespace OnlineShop.web.Services
         public User GetUserByEmail(string email)
         {
             return _context.Users.SingleOrDefault(u => u.Email == email);
+        }
+
+        public User GetUserById(int userId)
+        {
+            return _context.Users.Find(userId);
         }
 
         public User GetUserByActiveCode(string activeCode)
@@ -268,6 +274,54 @@ namespace OnlineShop.web.Services
             }
 
             return AddUser(addUser);
+        }
+
+        public UsersViewModel.EditUserViewModel GetUserForShowInEditMode(int userId)
+        {
+            return _context.Users.Where(u => u.UserId == userId)
+                .Select(u => new UsersViewModel.EditUserViewModel()
+                {
+                    UserId = u.UserId,
+                    AvatarName = u.UserAvatar,
+                    Email = u.Email,
+                    UserName = u.UserName,
+                    UserRoles = u.UserRoles.Select(r => r.RoleId).ToList()
+                }).Single();
+        }
+
+        public void EditUserFromAdmin(UsersViewModel.EditUserViewModel editUser)
+        {
+            User user = GetUserById(editUser.UserId);
+            user.Email = editUser.Email;
+            if (!string.IsNullOrEmpty(editUser.Password))
+            {
+                user.Password = PasswordHelper.EncodePasswordMd5(editUser.Password);
+            }
+
+            if (editUser.UserAvatar != null)
+            {
+                //Delete Old Image
+                if (editUser.AvatarName != "Default.jpg")
+                {
+                    string deletePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/UserAvatar",
+                        editUser.AvatarName);
+                    if (File.Exists(deletePath))
+                    {
+                        File.Delete(deletePath);
+                    }
+                }
+            }
+
+            //Save New Image
+            user.UserAvatar = NameGenerator.GenerateUniqCode() + Path.GetExtension(editUser.UserAvatar.FileName);
+            string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/UserAvatar", user.UserAvatar);
+            using (var stream = new FileStream(imagePath, FileMode.Create))
+            {
+                editUser.UserAvatar.CopyTo(stream);
+            }
+
+            _context.Users.Update(user);
+            _context.SaveChanges();
         }
     }
 }

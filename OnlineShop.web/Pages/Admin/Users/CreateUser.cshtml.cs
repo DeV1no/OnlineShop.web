@@ -26,6 +26,8 @@ namespace OnlineShop.web.Pages.Admin.Users
 
         public IActionResult OnPost(List<int> selectedRoles)
         {
+            ViewData["Roles"] = _permisionService.GetRoles();
+
             if (!ModelState.IsValid)
                 return Page();
             int userId = _userService.AddUserFromAdmin(CreateUserViewModel);

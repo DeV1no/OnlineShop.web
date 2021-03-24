@@ -8,5 +8,6 @@ namespace OnlineShop.web.Services.Interface
         //Roles
         List<Role> GetRoles();
         void AddRolesToUser(List<int> roleIds, int userId);
+        void EditRolesUser(int userId, List<int> roleId);
     }
 }

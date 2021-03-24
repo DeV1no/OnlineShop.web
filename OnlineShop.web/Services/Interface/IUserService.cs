@@ -12,6 +12,7 @@ namespace OnlineShop.web.Services.Interface
         int AddUser(User user);
         User LoginUser(AccountViewModel.LoginViewModel login);
         User GetUserByEmail(string email);
+        User GetUserById(int UserId);
         User GetUserByActiveCode(string activeCode);
         User GetUserByUserName(string userName);
         int GetUserIdByUserName(string userName);
@@ -40,5 +41,7 @@ namespace OnlineShop.web.Services.Interface
             string filterUserName = "");
 
         int AddUserFromAdmin(UsersViewModel.CreateUserViewModel user);
+        UsersViewModel.EditUserViewModel GetUserForShowInEditMode(int userId);
+        void EditUserFromAdmin(UsersViewModel.EditUserViewModel editUser);
     }
 }

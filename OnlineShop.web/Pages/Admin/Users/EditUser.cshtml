@@ -1,7 +1,7 @@
-@page
+@page "{id}"
 @using OnlineShop.DataLayer.Entities.User
-@model OnlineShop.web.Pages.Admin.Users.CreateUser
-
+@using OnlineShop.web.DTOs
+@model OnlineShop.web.Pages.Admin.Users.EditUser
 @{
     ViewData["Title"] = "افزودن کاربر";
     List<Role> Roles = ViewData["Roles"] as List<Role>;
@@ -9,18 +9,15 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">
-          
-                افزودن کاربر جدید
-
-          
-        </h1>
+        <h1 class="page-header">ویرایش کاربر</h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
 
 <div class="row">
     <form method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="EditUserViewModel.UserId"/>
+        <input type="hidden" asp-for="EditUserViewModel.AvatarName"/>
         <div class="col-md-8">
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -30,29 +27,32 @@
                 <div class="panel-body">
                     <div class="form-group">
                         <label>نام کاربری</label>
-                        <input type="text" asp-for="CreateUserViewModel.UserName" class="form-control">
+                        <input type="email" asp-for="EditUserViewModel.UserName" class="form-control" readonly>
                     </div>
                     <div class="form-group">
                         <label>ایمیل</label>
-                        <input type="email" asp-for="CreateUserViewModel.Email" class="form-control">
+                        <input type="email" asp-for="EditUserViewModel.Email" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>کلمه عبور</label>
-                        <input type="text" asp-for="CreateUserViewModel.Password" class="form-control">
+                        <input type="text" asp-for="EditUserViewModel.Password" class="form-control">
+                        <p class="help-block">در صورت وارد کردن کلمه عبور ، کلمه عبور کاربر تغییر خواهد کرد</p>
                     </div>
                     <div class="form-group">
                         <label>انتخاب نقش کاربر</label>
+
                         @foreach (var item in Roles)
                         {
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="SelectedRoles" value="@item.RoleId">@item.RoleTitle
+                                    <input type="checkbox" name="SelectedRoles" value="@item.RoleId" @((Model.EditUserViewModel.UserRoles.Any(r => r == item.RoleId) ? "checked" : ""))>@item.RoleTitle
                                 </label>
                             </div>
                         }
 
                     </div>
-                    <input type="submit" value="ذخیره اطلاعات" class="btn btn-success"/>
+                    <input type="submit" value="ویرایش اطلاعات" class="btn btn-success"/>
+                    <a href="/admin/users" class="btn btn-danger">بازگشت</a>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -64,10 +64,10 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <img id="imgAvatar" class="thumbnail" src="/UserAvatar/Defult.jpg"/>
+                    <img id="imgAvatar" class="thumbnail" src="/UserAvatar/@Model.EditUserViewModel.AvatarName"/>
                     <div class="form-group">
                         <label>انتخاب تصویر</label>
-                        <input type="file" asp-for="CreateUserViewModel.UserAvatar">
+                        <input type="file" asp-for="EditUserViewModel.UserAvatar">
                     </div>
                 </div>
                 <!-- /.panel-body -->
@@ -94,7 +94,7 @@
             }
         }
 
-        $("#CreateUserViewModel_UserAvatar").change(function() {
+        $("#EditUserViewModel_UserAvatar").change(function() {
             readURL(this);
         });
     </script>
