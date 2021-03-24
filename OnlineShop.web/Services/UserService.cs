@@ -217,7 +217,8 @@ namespace OnlineShop.web.Services
             _context.SaveChanges();
         }
 
-        public UsersViewModel.UsersForAdminViewModel GetUsers(int pageId = 1, string filterEmail = "", string filterUserName = "")
+        public UsersViewModel.UsersForAdminViewModel GetUsers(int pageId = 1, string filterEmail = "",
+            string filterUserName = "")
         {
             IQueryable<User> result = _context.Users;
 
@@ -236,12 +237,37 @@ namespace OnlineShop.web.Services
             int skip = (pageId - 1) * take;
 
 
-            UsersViewModel.UsersForAdminViewModel list=new UsersViewModel.UsersForAdminViewModel();
+            UsersViewModel.UsersForAdminViewModel list = new UsersViewModel.UsersForAdminViewModel();
             list.CurrentPage = pageId;
             list.PageCount = result.Count() / take;
             list.Users = result.OrderBy(u => u.RegisterDate).Skip(skip).Take(take).ToList();
 
             return list;
+        }
+
+        public int AddUserFromAdmin(UsersViewModel.CreateUserViewModel user)
+        {
+            User addUser = new User();
+            addUser.Password = PasswordHelper.EncodePasswordMd5(user.Password);
+            addUser.ActiveCode = NameGenerator.GenerateUniqCode();
+            addUser.Email = user.Email;
+            addUser.Email = user.Email;
+            addUser.IsActive = true;
+            addUser.RegisterDate = DateTime.Now;
+            addUser.UserName = user.UserName;
+            //save avatar
+            if (user.UserAvatar != null)
+            {
+                string imagePath = "";
+                addUser.UserAvatar = NameGenerator.GenerateUniqCode() + Path.GetExtension(user.UserAvatar.FileName);
+                imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/UserAvatar", addUser.UserAvatar);
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    user.UserAvatar.CopyTo(stream);
+                }
+            }
+
+            return AddUser(addUser);
         }
     }
 }

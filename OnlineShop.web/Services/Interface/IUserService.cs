@@ -36,5 +36,9 @@ namespace OnlineShop.web.Services.Interface
         void UpdateWallet(Wallet wallet);
 
         // admin panel
-        UsersViewModel.UsersForAdminViewModel GetUsers(int pageId = 1, string filterEmail = "", string filterUserName = "");    }
+        UsersViewModel.UsersForAdminViewModel GetUsers(int pageId = 1, string filterEmail = "",
+            string filterUserName = "");
+
+        int AddUserFromAdmin(UsersViewModel.CreateUserViewModel user);
+    }
 }
