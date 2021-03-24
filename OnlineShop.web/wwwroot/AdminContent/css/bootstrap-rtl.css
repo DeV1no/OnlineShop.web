@@ -34,6 +34,11 @@ audio:not([controls]) {
 [hidden] {
   display: none;
 }
+font-face {
+  font-family: Sahel;
+  src: url(../fonts/Sahel.woff);
+}
+
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
@@ -41,6 +46,7 @@ html {
 }
 body {
   margin: 0;
+  font-family: 'Sahel' !important;
 }
 a:focus {
   outline: thin dotted;
@@ -258,7 +264,7 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Sahel", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.428571429;
   color: #333333;
@@ -394,7 +400,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Sahel", Helvetica, Arial, sans-serif;
   font-weight: 500;
   line-height: 1.1;
 }
@@ -604,7 +610,7 @@ address {
 }
 code,
 pre {
-  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+  font-family: "Sahel", Menlo, Consolas, "Sahel", monospace;
 }
 code {
   padding: 2px 4px;
@@ -2163,7 +2169,7 @@ input[type="button"].btn-block {
   position: relative;
   top: 1px;
   display: inline-block;
-  font-family: 'Glyphicons Halflings';
+  font-family: 'Sahel';
   font-style: normal;
   font-weight: normal;
   line-height: 1;

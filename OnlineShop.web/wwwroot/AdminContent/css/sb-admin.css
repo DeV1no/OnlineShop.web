@@ -1,16 +1,21 @@
 /* Global Styles */
 
 /* ------------------------------- */
-
+@font-face {
+    font-family: Sahel;
+    src: url(../fonts/Sahel.woff);
+}
 body {
     padding-top: 100px;
     background-color: #f8f8f8;
+    font-family: 'Sahel' !important;
 }
 
 @media(min-width:768px) {
     body {
         padding-top: 50px;
     }
+
 }
 
 /* Wrappers */

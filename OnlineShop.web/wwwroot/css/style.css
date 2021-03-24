@@ -73,7 +73,7 @@ a,i,input[type="submit"], form button{ -webkit-transition : all 0.2s linear 0s; 
   word-spacing: -1px
 }
 .landing-layer header .logo{
-  width: 250px;
+  width: 190px !important;
   display: block;
   margin: 0 auto 20px
 }
