@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineShop.DataLayer.Entities.User;
@@ -19,20 +20,22 @@ namespace OnlineShop.web.Pages.Admin.Roles
         public void OnGet(int id)
         {
             Role = _permisionService.GetRoleById(id);
+            ViewData["Permissions"] = _permisionService.GetAllPermision();
+            ViewData["SelectedPermissions"] = _permisionService.permissionsRole(id);
         }
-        
-      
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(List<int> SelectedPermission)
         {
             if (!ModelState.IsValid)
                 return Page();
-            //update
+
 
             _permisionService.UpdateRole(Role);
 
-            // todo Add permision
+            _permisionService.UpdatePermissionsRole(Role.RoleId, SelectedPermission);
+
             return RedirectToPage("Index");
         }
     }
 }
+

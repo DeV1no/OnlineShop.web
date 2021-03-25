@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using OnlineShop.web.Entities.Permissions;
 
 namespace OnlineShop.DataLayer.Entities.User
 {
@@ -22,6 +23,7 @@ namespace OnlineShop.DataLayer.Entities.User
         #region Relations
 
         public virtual List<UserRole> UserRoles { get; set; }
+        public List<RolePermisson> RolePermissons { get; set; }
 
         #endregion
     }

@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShop.DataLayer.Context;
 
 namespace OnlineShop.web.Migrations
 {
     [DbContext(typeof(OnlineShopeContext))]
-    partial class OnlineShopeContextModelSnapshot : ModelSnapshot
+    [Migration("20210325170749_PermissionsTT")]
+    partial class PermissionsTT
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,7 +114,7 @@ namespace OnlineShop.web.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Permision");
+                    b.ToTable("Permission");
                 });
 
             modelBuilder.Entity("OnlineShop.web.Entities.Permissions.RolePermisson", b =>

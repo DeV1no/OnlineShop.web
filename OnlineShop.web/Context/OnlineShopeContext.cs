@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.DataLayer.Entities.User;
+using OnlineShop.web.Entities.Permissions;
 using OnlineShop.web.Entities.Wallet;
 
 namespace OnlineShop.DataLayer.Context
@@ -22,6 +23,13 @@ namespace OnlineShop.DataLayer.Context
 
         public DbSet<WalletType> WalletTypes { get; set; }
         public DbSet<Wallet> Wallet { get; set; }
+
+        #endregion
+
+        #region Permisions
+
+        public DbSet<Permission> Permision { get; set; }
+        public DbSet<RolePermisson> RolePermisson { get; set; }
 
         #endregion
 

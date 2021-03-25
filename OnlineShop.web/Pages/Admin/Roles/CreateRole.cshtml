@@ -1,8 +1,11 @@
 @page
+@using OnlineShop.web.Entities.Permissions
+@using OnlineShop.web.Migrations
 @model OnlineShop.web.Pages.Admin.Roles.CreateRole
 
 @{
     ViewData["Title"] = "افزودن نقش جدید";
+    List<Permission> permissions = ViewData["Permissions"] as List<Permission>;
 }
 
 <div class="row">
@@ -42,9 +45,40 @@
                     دسترسی های نقش
                 </div>
                 <!-- /.panel-heading -->
-                <div class="panel-body">
-
-                </div>
+                 <div class="panel-body">
+                                  <ul>
+                                      @foreach (var permission in permissions.Where(p => p.ParentId == null))
+                                      {
+                                          <li>
+                                              <input type="checkbox" name="SelectedPermission" value="@permission.PermissionId" /> @permission.permissionTitle
+              
+                                              @if (permissions.Any(p => p.ParentId == permission.ParentId))
+                                              {
+                                                  <ul>
+                                                      @foreach (var sub in permissions.Where(p => p.ParentId == permission.PermissionId))
+                                                      {
+                                                          <li>
+                                                              <input type="checkbox" name="SelectedPermission" value="@sub.PermissionId" /> @sub.permissionTitle
+                                                              @if (permissions.Any(p => p.ParentId == sub.ParentId))
+                                                              {
+                                                                  <ul>
+              
+                                                                      @foreach (var sub2 in permissions.Where(p => p.ParentId == sub.PermissionId))
+                                                                      {
+                                                                      <li>
+                                                                      <input type="checkbox" name="SelectedPermission" value="@sub2.PermissionId" /> @sub2.permissionTitle
+                                                                      </li>
+                                                                      }
+                                                                  </ul>
+                                                              }
+                                                          </li>
+                                                      }
+                                                  </ul>
+                                              }
+                                          </li>
+                                      }
+                                  </ul>
+                              </div>
                 <!-- /.panel-body -->
             </div>
 
