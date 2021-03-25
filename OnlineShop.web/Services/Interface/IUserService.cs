@@ -20,8 +20,13 @@ namespace OnlineShop.web.Services.Interface
 
         bool ActiveAccount(string activeCode);
 
+        void DeleteUser(int userId);
+
+        void RecoverUser(int userId);
+
         // user panel
         UserPanelViewModel.InformationUserViewModel GetUserInformation(string username);
+        UserPanelViewModel.InformationUserViewModel GetUserInformation(int userId);
         UserPanelViewModel.SideBarUserPanelViewModel GetSideBarUserPanelData(string username);
         UserPanelViewModel.EditProfileViewModel GetDataForEditProfileUser(string username);
         void EditProfile(string username, UserPanelViewModel.EditProfileViewModel profile);
@@ -38,6 +43,9 @@ namespace OnlineShop.web.Services.Interface
 
         // admin panel
         UsersViewModel.UsersForAdminViewModel GetUsers(int pageId = 1, string filterEmail = "",
+            string filterUserName = "");
+
+        UsersViewModel.UsersForAdminViewModel GetDeleteUsers(int pageId = 1, string filterEmail = "",
             string filterUserName = "");
 
         int AddUserFromAdmin(UsersViewModel.CreateUserViewModel user);

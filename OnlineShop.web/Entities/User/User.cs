@@ -34,6 +34,7 @@ namespace OnlineShop.DataLayer.Entities.User
         [Display(Name = "نمایه")] public string UserAvatar { get; set; }
 
         [Display(Name = "تاریخ ثبت نام")] public DateTime RegisterDate { get; set; }
+        public bool IsDelete { get; set; }
 
         #region Relationship
 

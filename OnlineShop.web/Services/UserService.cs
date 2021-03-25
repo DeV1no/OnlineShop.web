@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using OnlineShop.DataLayer.Context;
 using OnlineShop.DataLayer.Entities.User;
 using OnlineShop.web.Convertor;
@@ -90,6 +91,20 @@ namespace OnlineShop.web.Services
             return true;
         }
 
+        public void DeleteUser(int userId)
+        {
+            User user = GetUserById(userId);
+            user.IsDelete = true;
+            UpdateUser(user);
+        }
+
+        public void RecoverUser(int userId)
+        {
+            User user = GetUserById(userId);
+            user.IsDelete = false;
+            UpdateUser(user);
+        }
+
         public UserPanelViewModel.InformationUserViewModel GetUserInformation(string username)
         {
             var user = GetUserByUserName(username);
@@ -99,6 +114,18 @@ namespace OnlineShop.web.Services
             information.Email = user.Email;
             information.RegisterDate = user.RegisterDate;
             information.Wallet = BalanceUserWallet(username);
+            return information;
+        }
+
+        public UserPanelViewModel.InformationUserViewModel GetUserInformation(int userId)
+        {
+            var user = GetUserById(userId);
+            UserPanelViewModel.InformationUserViewModel information =
+                new UserPanelViewModel.InformationUserViewModel();
+            information.UserName = user.UserName;
+            information.Email = user.Email;
+            information.RegisterDate = user.RegisterDate;
+            information.Wallet = BalanceUserWallet(user.UserName);
             return information;
         }
 
@@ -227,6 +254,34 @@ namespace OnlineShop.web.Services
             string filterUserName = "")
         {
             IQueryable<User> result = _context.Users;
+
+            if (!string.IsNullOrEmpty(filterEmail))
+            {
+                result = result.Where(u => u.Email.Contains(filterEmail));
+            }
+
+            if (!string.IsNullOrEmpty(filterUserName))
+            {
+                result = result.Where(u => u.UserName.Contains(filterUserName));
+            }
+
+            // Show Item In Page
+            int take = 15;
+            int skip = (pageId - 1) * take;
+
+
+            UsersViewModel.UsersForAdminViewModel list = new UsersViewModel.UsersForAdminViewModel();
+            list.CurrentPage = pageId;
+            list.PageCount = result.Count() / take;
+            list.Users = result.OrderBy(u => u.RegisterDate).Skip(skip).Take(take).ToList();
+
+            return list;
+        }
+
+        public UsersViewModel.UsersForAdminViewModel GetDeleteUsers(int pageId = 1, string filterEmail = "",
+            string filterUserName = "")
+        {
+            IQueryable<User> result = _context.Users.IgnoreQueryFilters().Where(u => u.IsDelete == true);
 
             if (!string.IsNullOrEmpty(filterEmail))
             {
