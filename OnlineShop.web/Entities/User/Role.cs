@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -8,24 +7,21 @@ namespace OnlineShop.DataLayer.Entities.User
     {
         public Role()
         {
-            
         }
 
-        [Key]
-        public int RoleId { get; set; }
+        [Key] public int RoleId { get; set; }
 
-        [Display(Name = "")]
+        [Display(Name = "عنوان نقش")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        [MaxLength(200,ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد .")]
+        [MaxLength(200, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد .")]
         public string RoleTitle { get; set; }
 
-
+        public bool IsDelete { get; set; }
 
 
         #region Relations
 
         public virtual List<UserRole> UserRoles { get; set; }
-
 
         #endregion
     }

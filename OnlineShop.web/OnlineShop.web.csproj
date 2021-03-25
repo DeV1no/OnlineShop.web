@@ -26,4 +26,8 @@
         <Folder Include="wwwroot\AdminContent" />
         <Folder Include="wwwroot\UserAvatar" />
     </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\Roles\Index.cshtml" />
+    </ItemGroup>
 </Project>

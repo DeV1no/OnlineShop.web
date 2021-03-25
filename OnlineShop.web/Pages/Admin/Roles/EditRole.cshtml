@@ -1,0 +1,55 @@
+@page "{id}"
+@model OnlineShop.web.Pages.Admin.Roles.EditRole
+
+@{
+    ViewData["Title"] = "ویرایش نقش";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+
+            ویرایش نقش
+            @Model.Role.RoleTitle
+
+        </h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<div class="row">
+    <form method="post" enctype="multipart/form-data">
+        <div class="col-md-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    نقش
+                </div>
+                <!-- /.panel-heading -->
+                <input type="hidden" asp-for="Role.RoleId">
+                <input type="hidden" asp-for="Role.IsDelete">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>عنوان نقش</label>
+                        <input type="text" asp-for="Role.RoleTitle" class="form-control">
+                    </div>
+
+                    <input type="submit" value="ویرایش اطلاعات" class="btn btn-success"/>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    دسترسی های نقش
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+
+                </div>
+                <!-- /.panel-body -->
+            </div>
+
+        </div>
+
+    </form>
+</div>

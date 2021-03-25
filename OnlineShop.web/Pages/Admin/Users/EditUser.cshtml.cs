@@ -21,7 +21,7 @@ namespace OnlineShop.web.Pages.Admin.Users
         public void OnGet(int id)
         {
             EditUserViewModel = _userService.GetUserForShowInEditMode(id);
-            ViewData["Roles"] = _permisionService.GetRoles();
+            ViewData["Role"] = _permisionService.GetRoles();
         }
 
         public IActionResult OnPost(List<int> SelectedRoles)

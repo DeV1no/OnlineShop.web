@@ -15,9 +15,33 @@ namespace OnlineShop.web.Services
             _context = context;
         }
 
-        public  List<Role> GetRoles()
+        public List<Role> GetRoles()
         {
             return _context.Roles.ToList();
+        }
+
+        public int AddRole(Role role)
+        {
+            _context.Roles.Add(role);
+            _context.SaveChanges();
+            return role.RoleId;
+        }
+
+        public Role GetRoleById(int RoleId)
+        {
+            return _context.Roles.Find(RoleId);
+        }
+
+        public void UpdateRole(Role role)
+        {
+            _context.Roles.Update(role);
+            _context.SaveChanges();
+        }
+
+        public void DeleteRole(Role role)
+        {
+            role.IsDelete = true;
+            UpdateRole(role);
         }
 
         public void AddRolesToUser(List<int> roleIds, int userId)
@@ -37,9 +61,9 @@ namespace OnlineShop.web.Services
         public void EditRolesUser(int userId, List<int> roleId)
         {
             // Delete all roles
-            _context.UserRoles.Where(r=>r.UserId==userId).ToList()
-                .ForEach(r=>_context.UserRoles.Remove(r));
-            
+            _context.UserRoles.Where(r => r.UserId == userId).ToList()
+                .ForEach(r => _context.UserRoles.Remove(r));
+
             //Add new roles
             AddRolesToUser(roleId, userId);
         }

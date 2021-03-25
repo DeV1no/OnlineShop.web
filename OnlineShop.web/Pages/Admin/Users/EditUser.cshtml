@@ -4,7 +4,7 @@
 @model OnlineShop.web.Pages.Admin.Users.EditUser
 @{
     ViewData["Title"] = "افزودن کاربر";
-    List<Role> Roles = ViewData["Roles"] as List<Role>;
+    List<Role> Role = ViewData["Role"] as List<Role>;
 }
 
 <div class="row">
@@ -41,7 +41,7 @@
                     <div class="form-group">
                         <label>انتخاب نقش کاربر</label>
 
-                        @foreach (var item in Roles)
+                        @foreach (var item in Role)
                         {
                             <div class="checkbox">
                                 <label>
