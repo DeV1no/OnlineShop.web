@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using OnlineShop.web.Entities.Course;
 using OnlineShop.web.Entities.Wallet;
 
 namespace OnlineShop.DataLayer.Entities.User
@@ -40,6 +41,7 @@ namespace OnlineShop.DataLayer.Entities.User
 
         public virtual List<UserRole> UserRoles { get; set; }
         public virtual List<Wallet> Wallet { get; set; }
+        public virtual List<Course> Course { get; set; }
 
         #endregion
     }

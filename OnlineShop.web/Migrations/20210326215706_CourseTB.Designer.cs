@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShop.DataLayer.Context;
 
 namespace OnlineShop.web.Migrations
 {
     [DbContext(typeof(OnlineShopeContext))]
-    partial class OnlineShopeContextModelSnapshot : ModelSnapshot
+    [Migration("20210326215706_CourseTB")]
+    partial class CourseTB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,9 +141,6 @@ namespace OnlineShop.web.Migrations
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SubGroup")
-                        .HasColumnType("int");
-
                     b.Property<string>("Tags")
                         .HasMaxLength(600)
                         .HasColumnType("varchar(600) CHARACTER SET utf8mb4");
@@ -159,8 +158,6 @@ namespace OnlineShop.web.Migrations
                     b.HasIndex("CourseStatusStatusId");
 
                     b.HasIndex("GroupId");
-
-                    b.HasIndex("SubGroup");
 
                     b.HasIndex("TeacherId");
 
@@ -431,10 +428,6 @@ namespace OnlineShop.web.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OnlineShop.web.Entities.Course.CourseGroup", "Group")
-                        .WithMany("SubGroup")
-                        .HasForeignKey("SubGroup");
-
                     b.HasOne("OnlineShop.DataLayer.Entities.User.User", "User")
                         .WithMany("Course")
                         .HasForeignKey("TeacherId")
@@ -446,8 +439,6 @@ namespace OnlineShop.web.Migrations
                     b.Navigation("CourseLevel");
 
                     b.Navigation("CourseStatus");
-
-                    b.Navigation("Group");
 
                     b.Navigation("User");
                 });
@@ -541,8 +532,6 @@ namespace OnlineShop.web.Migrations
                     b.Navigation("CourseGroups");
 
                     b.Navigation("Courses");
-
-                    b.Navigation("SubGroup");
                 });
 
             modelBuilder.Entity("OnlineShop.web.Entities.Course.CourseLevel", b =>
