@@ -2,10 +2,13 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineShop.DataLayer.Entities.User;
+using OnlineShop.web.Security;
 using OnlineShop.web.Services.Interface;
 
 namespace OnlineShop.web.Pages.Admin.Roles
 {
+    [PermissionChecker(7)]
+
     public class CreateRole : PageModel
     {
         private IPermisionService _permisionService;

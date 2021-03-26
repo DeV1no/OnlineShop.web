@@ -96,10 +96,23 @@ namespace OnlineShop.web.Services
 
         public void UpdatePermissionsRole(int roleId, List<int> permissions)
         {
-            _context.RolePermisson.Where(p=>p.RoleId==roleId)
-                .ToList().ForEach(p=> _context.RolePermisson.Remove(p));
+            _context.RolePermisson.Where(p => p.RoleId == roleId)
+                .ToList().ForEach(p => _context.RolePermisson.Remove(p));
 
-            AddPermisonsToRole(roleId,permissions);
+            AddPermisonsToRole(roleId, permissions);
+        }
+
+        public bool UserCheckPermission(int permissionId, string userName)
+        {
+            int userId = _context.Users.Single(u => u.UserName == userName).UserId;
+            List<int> UserRoles = _context.UserRoles
+                .Where(r => r.UserId == userId).Select(r => r.RoleId).ToList();
+            if (!UserRoles.Any())
+                return false;
+            List<int> RolesPermission = _context.RolePermisson
+                .Where(r => r.PermissionId == permissionId)
+                .Select(p => p.RoleId).ToList();
+            return RolesPermission.Any(p => UserRoles.Contains(p));
         }
     }
 }

@@ -22,5 +22,6 @@ namespace OnlineShop.web.Services.Interface
         void AddPermisonsToRole(int roleId, List<int> permission);
         List<int> permissionsRole(int roleId);
         void UpdatePermissionsRole(int roleId, List<int> permissions);
+        bool UserCheckPermission(int permissionId, string userName);
     }
 }

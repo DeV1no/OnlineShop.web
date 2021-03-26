@@ -2,10 +2,13 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineShop.DataLayer.Entities.User;
+using OnlineShop.web.Security;
 using OnlineShop.web.Services.Interface;
 
 namespace OnlineShop.web.Pages.Admin.Roles
 {
+    [PermissionChecker(8)]
+
     public class EditRole : PageModel
     {
         private IPermisionService _permisionService;

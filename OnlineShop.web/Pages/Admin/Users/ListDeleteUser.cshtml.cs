@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineShop.web.DTOs;
+using OnlineShop.web.Security;
 using OnlineShop.web.Services.Interface;
 
 namespace OnlineShop.web.Pages.Admin.Users
 {
+    [PermissionChecker(2)]
     public class ListDeleteUser : PageModel
     {
         private IUserService _userService;

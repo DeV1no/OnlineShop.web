@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineShop.web.DTOs;
+using OnlineShop.web.Security;
 using OnlineShop.web.Services.Interface;
 
 namespace OnlineShop.web.Pages.Admin.Users
 {
+    [PermissionChecker(6)]
+
     public class Index : PageModel
     {
         private IUserService _userService;
