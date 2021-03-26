@@ -30,7 +30,7 @@
                             <div class="loggein ">
                                 <i class="zmdi zmdi-account"></i>
                                 <a href="/UserPanel">
-                                    
+
                                     @User.Identity.Name
                                     عزیز
                                     ، خوش آمدی
@@ -56,7 +56,7 @@
 </div>
 
 <!-- main manu -->
-<partial name="_MainMenu"/>
+@await Component.InvokeAsync("CourseGroupComponent")
 <!-- /main manu -->
 <!-- content -->
 @RenderBody()

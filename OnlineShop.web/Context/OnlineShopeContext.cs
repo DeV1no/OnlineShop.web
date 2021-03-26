@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.DataLayer.Entities.User;
+using OnlineShop.web.Entities.Course;
 using OnlineShop.web.Entities.Permissions;
 using OnlineShop.web.Entities.Wallet;
 
@@ -34,16 +35,23 @@ namespace OnlineShop.DataLayer.Context
 
         #endregion
 
+        #region Course
+
+        public DbSet<CourseGroup> CourseGroups { get; set; }
+
+        #endregion
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
                 .HasQueryFilter(u => !u.IsDelete);
             modelBuilder.Entity<Role>()
                 .HasQueryFilter(r => !r.IsDelete);
+            modelBuilder.Entity<CourseGroup>()
+                .HasQueryFilter(c => !c.IsDelete);
             SeedData(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
-           
         }
 
 
@@ -52,7 +60,7 @@ namespace OnlineShop.DataLayer.Context
         //permissions
         private void SeedData(ModelBuilder modelBuilder)
         {
-            var adminPanel = new Permission() {PermissionId = 1, permissionTitle = "پنل مدیریت", };
+            var adminPanel = new Permission() {PermissionId = 1, permissionTitle = "پنل مدیریت",};
             var userManagment = new Permission() {PermissionId = 2, permissionTitle = "مدیریت کاربران", ParentId = 1};
             var addUser = new Permission() {PermissionId = 3, permissionTitle = "افزودن کاربر", ParentId = 2};
             var editUser = new Permission() {PermissionId = 4, permissionTitle = "ویرایش کاربران", ParentId = 2};
@@ -64,7 +72,8 @@ namespace OnlineShop.DataLayer.Context
             modelBuilder.Entity<Permission>()
                 .HasData(new List<Permission>
                 {
-                   adminPanel,userManagment,addUser,editUser,deleteUser,roleManagment,addRole,editRole,deleteRole 
+                    adminPanel, userManagment, addUser, editUser, deleteUser, roleManagment, addRole, editRole,
+                    deleteRole
                 });
         }
 

@@ -1,0 +1,39 @@
+@model IEnumerable<OnlineShop.web.Entities.Course.CourseGroup>
+
+<div class="main-menu">
+    <div class="container">
+        <nav>
+            <span class="responsive-sign">
+                <i class="zmdi zmdi-menu"></i>
+            </span>
+
+            <ul>
+                <li>
+                    <a href="/" class="zmdi zmdi-home">
+                        خانه
+                    </a>
+                </li>
+                @foreach (var group in Model.Where(g => g.ParentId == null))
+                {
+                    <li>
+                        <a href="/" class="">@group.GroupTitle</a>
+                        @if (Model.Any(g => g.ParentId == group.GroupId))
+                        {
+                            <ul>
+                                <li>
+                                    @foreach (var sub in Model.Where(g => g.ParentId == group.GroupId))
+                                    {
+                                        <li>
+                                            <a href="">@sub.GroupTitle</a>
+                                        </li>
+                                    }
+                                </li>
+                            </ul>
+                        }
+                    </li>
+                }
+
+            </ul>
+        </nav>
+    </div>
+</div>
