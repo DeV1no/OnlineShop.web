@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using OnlineShop.web.Models;
 using OnlineShop.web.Services.Interface;
@@ -14,11 +15,14 @@ namespace OnlineShop.web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IUserService _userService;
+        private ICourseSerervice _courseSerervice;
 
-        public HomeController(ILogger<HomeController> logger, IUserService userService)
+        public HomeController(ILogger<HomeController> logger, IUserService userService,
+            ICourseSerervice courseSerervice)
         {
             _logger = logger;
             _userService = userService;
+            _courseSerervice = courseSerervice;
         }
 
         public IActionResult Index()
@@ -48,6 +52,17 @@ namespace OnlineShop.web.Controllers
             }
 
             return View();
+        }
+
+        public IActionResult GetSubGroups(int id)
+        {
+            List<SelectListItem> list = new List<SelectListItem>
+            {
+                new SelectListItem() {Text = "انتخاب کنید", Value = ""}
+            };
+            list.AddRange(_courseSerervice.GetSubGroupForManageCourse(id));
+            // var subgroups = _courseSerervice.GetSubGroupForManageCourse(id);
+            return Json(new SelectList(list, "Value", "Text"));
         }
     }
 }
