@@ -1,9 +1,14 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.DataLayer.Context;
+using OnlineShop.web.DTOs.Course;
 using OnlineShop.web.Entities.Course;
+using OnlineShop.web.Generrator;
 using OnlineShop.web.Services.Interface;
 
 namespace OnlineShop.web.Services
@@ -52,7 +57,7 @@ namespace OnlineShop.web.Services
                 }).ToList();
         }
 
-        public List<SelectListItem> GetLevels()
+        public List<SelectListItem> GetStatus()
         {
             return _context.CourseStatuses.Select(s => new SelectListItem()
             {
@@ -61,12 +66,48 @@ namespace OnlineShop.web.Services
             }).ToList();
         }
 
-        public List<SelectListItem> GetStatus()
+        public List<SelectListItem> GetLevels()
         {
             return _context.CourseLevels.Select(l => new SelectListItem()
             {
                 Value = l.LevelId.ToString(),
                 Text = l.LevelTitle
+            }).ToList();
+        }
+
+        public int AddCourse(Course course, IFormFile imgCourse, IFormFile courseDemo)
+        {
+            course.CreateDate = DateTime.Now;
+            course.CourseImageName = "no-photo.jpg";
+            //TODO Check Image
+            if (imgCourse != null)
+            {
+                course.CourseImageName = NameGenerator.GenerateUniqCode() + Path.GetExtension(imgCourse.FileName);
+                string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/image",
+                    course.CourseImageName);
+
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    imgCourse.CopyTo(stream);
+                }
+            }
+
+            //ToDO Upload Demo 
+
+            _context.Add(course);
+            _context.SaveChanges();
+
+            return course.CourseId;
+        }
+
+        public List<ShowCourseForAdminViewModel> GetCoursesForAdmin()
+        {
+            return _context.Courses.Select(c => new ShowCourseForAdminViewModel()
+            {
+                CourseId = c.CourseId,
+                ImageName = c.CourseImageName,
+                Title = c.CourseTitle,
+                EpisodeCount = c.CourseEpisodes.Count
             }).ToList();
         }
     }

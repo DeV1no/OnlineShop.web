@@ -1,4 +1,5 @@
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -32,6 +33,14 @@ namespace OnlineShop.web.Pages.Admin.Courses
 
             var status = _courseSerervice.GetStatus();
             ViewData["Statues"] = new SelectList(status, "Value", "Text");
+        }
+
+        public IActionResult OnPost(IFormFile imgCourseUp, IFormFile demoUp)
+        {
+            if (!ModelState.IsValid)
+                return Page();
+            _courseSerervice.AddCourse(Course, imgCourseUp, demoUp);
+            return RedirectToPage("Index");
         }
     }
 }

@@ -24,6 +24,8 @@
     <ItemGroup>
         <Folder Include="Senders" />
         <Folder Include="wwwroot\AdminContent" />
+        <Folder Include="wwwroot\course\image" />
+        <Folder Include="wwwroot\course\thumb" />
         <Folder Include="wwwroot\UserAvatar" />
     </ItemGroup>
 
