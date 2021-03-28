@@ -19,5 +19,7 @@ namespace OnlineShop.web.Services.Interface
         // Course
         int AddCourse(Course course, IFormFile imgCourse, IFormFile courseDemo);
         List<ShowCourseForAdminViewModel> GetCoursesForAdmin();
+        Course GetCourseById(int courseId);
+        void UpdateCourse(Course course, IFormFile imgCourse, IFormFile courseDemo);
     }
 }

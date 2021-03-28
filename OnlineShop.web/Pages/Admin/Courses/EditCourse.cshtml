@@ -1,12 +1,15 @@
-@page
-@model OnlineShop.web.Pages.Admin.Courses.CreateCourse
+@page "{id}"
+@model OnlineShop.web.Pages.Admin.Courses.EditCourse
 
 @{
-    ViewData["Title"] = "افزودن دوره جدید";
+    ViewData["Title"] = "ویرایش دوره";
 }
-
 <div class="row">
     <form method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Course.CreateDate"/>
+        <input type="hidden" asp-for="Course.CourseId"/>
+        <input type="hidden" asp-for="Course.CourseImageName"/>
+        <input type="hidden" asp-for="Course.DemoFileName"/>
         <div class="col-md-8">
             <h2>اطلاعات دوره</h2>
             <hr/>
@@ -42,8 +45,8 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>قیمت دوره</label>
-                        <input type="number" asp-for="Course.CoursePrice" value="0" class="form-control"/>
-                        <span asp-validation-for="Course.CourseDescription"></span>
+                        <input type="number" asp-for="Course.CoursePrice"  class="form-control"/>
+                        <span asp-validation-for="Course.CoursePrice"></span>
                     </div>
                 </div>
             </div>
@@ -64,15 +67,15 @@
                 <label>کلمات کلیدی دوره</label>
                 <input type="text" asp-for="Course.Tags" class="form-control">
                 <p class="help-block">کلمات را با - جدا کنید</p>
-                <span asp-validation-for="Course.CourseTitle"></span>
+                <span asp-validation-for="Course.Tags"></span>
             </div>
-            
+
             <input type="submit" value="ذخیره اطلاعات" class="btn btn-success"/>
             <a href="/admin/courses" class="btn btn-danger">بازگشت</a>
         </div>
         <div class="col-md-4">
             <p></p>
-            <img id="imgCourse" class="thumbnail" src="/UserAvatar/Defult.jpg"/>
+            <img id="imgCourse" class="thumbnail" src="/course/image/@Model.Course.CourseImageName"/>
             <div class="form-group">
 
                 <label>انتخاب تصویر</label>

@@ -82,7 +82,7 @@ namespace OnlineShop.web.Services
             course.CreateDate = DateTime.Now;
             course.CourseImageName = "no-photo.jpg";
             // Check Image
-            
+
             if (imgCourse != null && imgCourse.IsImage())
             {
                 course.CourseImageName = NameGenerator.GenerateUniqCode() + Path.GetExtension(imgCourse.FileName);
@@ -93,14 +93,15 @@ namespace OnlineShop.web.Services
                 {
                     imgCourse.CopyTo(stream);
                 }
+
                 // image resize
                 ImageConverter imgResizer = new ImageConverter();
                 string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/thumb",
                     course.CourseImageName);
-                imgResizer.Image_resize(imagePath, thumbPath,150);
+                imgResizer.Image_resize(imagePath, thumbPath, 150);
             }
 
-           
+
             //Upload Demo 
 
             if (courseDemo != null)
@@ -130,6 +131,79 @@ namespace OnlineShop.web.Services
                 Title = c.CourseTitle,
                 EpisodeCount = c.CourseEpisodes.Count
             }).ToList();
+        }
+
+        public Course GetCourseById(int courseId)
+        {
+            return _context.Courses.Find(courseId);
+        }
+
+        public void UpdateCourse(Course course, IFormFile imgCourse, IFormFile courseDemo)
+        {
+            course.UpdateDate = DateTime.Now;
+
+            if (imgCourse != null && imgCourse.IsImage())
+            {
+                if (course.CourseImageName != "no-photo.jpg")
+                {
+                    string deleteimagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/image",
+                        course.CourseImageName);
+                    if (File.Exists(deleteimagePath))
+                    {
+                        File.Delete(deleteimagePath);
+                    }
+
+                    string deletethumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/thumb",
+                        course.CourseImageName);
+                    if (File.Exists(deletethumbPath))
+                    {
+                        File.Delete(deletethumbPath);
+                    }
+                }
+
+                course.CourseImageName = NameGenerator.GenerateUniqCode() + Path.GetExtension(imgCourse.FileName);
+                string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/image",
+                    course.CourseImageName);
+
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    imgCourse.CopyTo(stream);
+                }
+
+                // image resize
+                ImageConverter imgResizer = new ImageConverter();
+                string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/thumb",
+                    course.CourseImageName);
+                imgResizer.Image_resize(imagePath, thumbPath, 150);
+            }
+
+
+            //Upload Demo 
+
+            if (courseDemo != null)
+            {
+                if (course.DemoFileName != null)
+                {
+                    string deleteDemoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/demoes",
+                        course.DemoFileName);
+                    if (File.Exists(deleteDemoPath))
+                    {
+                        File.Delete(deleteDemoPath);
+                    }
+                }
+
+                course.DemoFileName = NameGenerator.GenerateUniqCode() + Path.GetExtension(courseDemo.FileName);
+                string demoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/demoes",
+                    course.DemoFileName);
+
+                using (var stream = new FileStream(demoPath, FileMode.Create))
+                {
+                    courseDemo.CopyTo(stream);
+                }
+            }
+
+            _context.Courses.Update(course);
+            _context.SaveChanges();
         }
     }
 }

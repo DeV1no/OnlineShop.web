@@ -28,6 +28,7 @@
         <Folder Include="wwwroot\course\demoes" />
         <Folder Include="wwwroot\course\image" />
         <Folder Include="wwwroot\course\thumb" />
+        <Folder Include="wwwroot\MyImages" />
         <Folder Include="wwwroot\UserAvatar" />
     </ItemGroup>
 
