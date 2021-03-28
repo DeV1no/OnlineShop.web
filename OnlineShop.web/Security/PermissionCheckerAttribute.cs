@@ -24,12 +24,12 @@ namespace OnlineShop.web.Security
 
                 if (!_permissionService.UserCheckPermission(_permissionId, userName))
                 {
-                    context.Result = new RedirectResult("/Login");
+                    context.Result = new RedirectResult("/");
                 }
             }
             else
             {
-                context.Result = new RedirectResult("/Login");
+                context.Result = new RedirectResult("/");
             }
         }
     }

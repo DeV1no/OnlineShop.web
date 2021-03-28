@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="CoreCompat.System.Drawing" Version="1.0.0-beta006" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.4" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.0">
             <PrivateAssets>all</PrivateAssets>
@@ -24,6 +25,7 @@
     <ItemGroup>
         <Folder Include="Senders" />
         <Folder Include="wwwroot\AdminContent" />
+        <Folder Include="wwwroot\course\demoes" />
         <Folder Include="wwwroot\course\image" />
         <Folder Include="wwwroot\course\thumb" />
         <Folder Include="wwwroot\UserAvatar" />
@@ -31,5 +33,13 @@
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Pages\Roles\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="Web.config">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </None>
     </ItemGroup>
 </Project>

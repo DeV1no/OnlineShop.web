@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -69,6 +70,9 @@ namespace OnlineShop.web
                 ;
 
             #endregion
+
+            //File largleantgh upload
+        //    services.Configure<FormOptions>(options => { options.MultipartBodyLengthLimit = 600000; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -91,7 +95,7 @@ namespace OnlineShop.web
                 routes.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.Run(async (context) => { await context.Response.WriteAsync("Hello World!"); });
+            app.Run(async (context) => { await context.Response.WriteAsync("hooooyyyy"); });
         }
     }
 }

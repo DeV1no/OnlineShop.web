@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.DataLayer.Context;
+using OnlineShop.web.Convertor;
 using OnlineShop.web.DTOs.Course;
 using OnlineShop.web.Entities.Course;
 using OnlineShop.web.Generrator;
+using OnlineShop.web.Security;
 using OnlineShop.web.Services.Interface;
 
 namespace OnlineShop.web.Services
@@ -79,8 +81,9 @@ namespace OnlineShop.web.Services
         {
             course.CreateDate = DateTime.Now;
             course.CourseImageName = "no-photo.jpg";
-            //TODO Check Image
-            if (imgCourse != null)
+            // Check Image
+            
+            if (imgCourse != null && imgCourse.IsImage())
             {
                 course.CourseImageName = NameGenerator.GenerateUniqCode() + Path.GetExtension(imgCourse.FileName);
                 string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/image",
@@ -90,9 +93,27 @@ namespace OnlineShop.web.Services
                 {
                     imgCourse.CopyTo(stream);
                 }
+                // image resize
+                ImageConverter imgResizer = new ImageConverter();
+                string thumbPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/thumb",
+                    course.CourseImageName);
+                imgResizer.Image_resize(imagePath, thumbPath,150);
             }
 
-            //ToDO Upload Demo 
+           
+            //Upload Demo 
+
+            if (courseDemo != null)
+            {
+                course.DemoFileName = NameGenerator.GenerateUniqCode() + Path.GetExtension(courseDemo.FileName);
+                string demoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/demoes",
+                    course.DemoFileName);
+
+                using (var stream = new FileStream(demoPath, FileMode.Create))
+                {
+                    courseDemo.CopyTo(stream);
+                }
+            }
 
             _context.Add(course);
             _context.SaveChanges();

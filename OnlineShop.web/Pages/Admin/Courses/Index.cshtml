@@ -2,7 +2,7 @@
 @model OnlineShop.web.Pages.Admin.Courses.Index
 
 @{
-    ViewData["Title"] = "لیست دوره ها";
+    ViewData["Title"]= "لیست دوره ها";
 }
 
 <div class="row">
@@ -37,7 +37,7 @@
                     {
                         <tr>
                             <td>
-                                <img src="/course/image/@course.ImageName" width="50px" height="50px" alt="">
+                                <img src="/course/thumb/@course.ImageName"  alt="">
                             </td>
                             <td>
                                 @course.Title
