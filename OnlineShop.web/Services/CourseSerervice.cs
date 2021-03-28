@@ -205,5 +205,59 @@ namespace OnlineShop.web.Services
             _context.Courses.Update(course);
             _context.SaveChanges();
         }
+
+        public List<CourseEpisode> GetListEpisode(int courseId)
+        {
+            return _context.CourseEpisodes.Where(e => e.CourseId == courseId).ToList();
+        }
+
+        public int AddEpisode(CourseEpisode episode, IFormFile episodeFile)
+        {
+            episode.EpisodeFileName = episodeFile.FileName;
+
+            string filepath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/CourseFiles",
+                episode.EpisodeFileName);
+
+            using (var stream = new FileStream(filepath, FileMode.Create))
+            {
+                episodeFile.CopyTo(stream);
+            }
+
+            _context.CourseEpisodes.Add(episode);
+            _context.SaveChanges();
+            return episode.EpisodeId;
+        }
+
+        public bool ChecExistFile(string fileName)
+        {
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/CourseFiles",
+                fileName);
+            return File.Exists(path);
+        }
+
+        public CourseEpisode GetEpisodeById(int episodeId)
+        {
+            return _context.CourseEpisodes.Find(episodeId);
+        }
+
+        public void EditEpisode(CourseEpisode episode, IFormFile episodeFile)
+        {
+            if (episodeFile != null)
+            {
+                string deleteFilepath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/CourseFiles",
+                    episode.EpisodeFileName);
+                File.Delete(deleteFilepath);
+                episode.EpisodeFileName = episodeFile.FileName;
+                string filepath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/course/CourseFiles",
+                    episode.EpisodeFileName);
+                using (var stream = new FileStream(filepath, FileMode.Create))
+                {
+                    episodeFile.CopyTo(stream);
+                }
+            }
+
+            _context.CourseEpisodes.Update(episode);
+            _context.SaveChanges();
+        }
     }
 }

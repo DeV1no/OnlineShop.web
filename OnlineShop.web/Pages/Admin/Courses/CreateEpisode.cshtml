@@ -1,0 +1,59 @@
+@page "{id}"
+@model OnlineShop.web.Pages.Admin.Courses.CreateEpisode
+
+@{
+    ViewData["Title"] = "افزودن بخش جدید";
+}
+
+<!DOCTYPE html>
+
+<div class="row">
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="CourseEpisode.CourseId">
+        <div class="col-md-12">
+            <h2>اطلاعات دوره</h2>
+            <hr>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-8">
+                <label>عنوان بخش</label>
+                <input type="text" asp-for="CourseEpisode.EpisodeTitle" class="form-control">
+                <span asp-validation-for="CourseEpisode.EpisodeTitle"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label>زمان بخش</label>
+                <input type="text" asp-for="CourseEpisode.EpisodeTime" class="form-control">
+                <span asp-validation-for="CourseEpisode.EpisodeTime"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label> فایل بخش</label>
+            <input type="file" name="fileEpisode">
+            <p class="text-danger mt-1"> فایل اجباری است</p>
+            @if (ViewData["IsExistfile"] != null)
+            {
+                <div class="row">
+                    <div class="alert alert-danger col-md-3 w-25  mr-2">
+                        نام فایل تکراری میباشد لطفا آن را تغییر دهید
+                    </div>
+                    </div>
+            }
+            <span asp-validation-for="CourseEpisode.EpisodeFileName"></span>
+        </div>
+        <div class="form-group">
+            <div class="d-block">
+                <label class="d-block">دسترسی : </label>
+            </div>
+            <lable>
+                رایگان است؟
+                <input type="checkbox" asp-for="CourseEpisode.IsFree" value="true" name="demoUp">
+
+            </lable>
+
+        </div>
+        <input type="submit" value="ثبت اطلاعات" class="btn btn-success">
+        @* /Admin/Courses/IndexEpisode/11 *@
+        <a href="/Admin/Courses/IndexEpisode/@ViewData["CourseId"]" class="btn btn-danger">بازگشت</a>
+    </form>
+
+</div>

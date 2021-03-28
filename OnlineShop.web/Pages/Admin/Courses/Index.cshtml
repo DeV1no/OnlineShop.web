@@ -45,13 +45,18 @@
                             <td>
                                 @course.EpisodeCount
                             </td>
-                            <td>
-                                <a href="/Admin/Courses/EditCourse/@course.CourseId" class="btn btn-warning btn-sm">
-                                    ویرایش
-                                </a>
-                                <a href="/Admin/Courses/DeleteCourse/@course.CourseId" class="btn btn-danger btn-sm">
-                                    حذف
-                                </a>
+                            <td class="mt-3">
+                                <div >
+                                    <a href="/Admin/Courses/IndexEpisode/@course.CourseId" class="btn btn-success btn-sm">
+                                        مدیریت قسمت ها
+                                    </a>
+                                    <a href="/Admin/Courses/EditCourse/@course.CourseId" class="btn btn-warning btn-sm">
+                                        ویرایش
+                                    </a>
+                                    <a href="/Admin/Courses/DeleteCourse/@course.CourseId" class="btn btn-danger btn-sm">
+                                        حذف
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     }

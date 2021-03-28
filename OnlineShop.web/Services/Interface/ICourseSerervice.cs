@@ -20,6 +20,14 @@ namespace OnlineShop.web.Services.Interface
         int AddCourse(Course course, IFormFile imgCourse, IFormFile courseDemo);
         List<ShowCourseForAdminViewModel> GetCoursesForAdmin();
         Course GetCourseById(int courseId);
+
         void UpdateCourse(Course course, IFormFile imgCourse, IFormFile courseDemo);
+
+        //Episode
+        List<CourseEpisode> GetListEpisode(int courseId);
+        int AddEpisode(CourseEpisode episode, IFormFile episodeFile);
+        bool ChecExistFile(string fileName);
+        CourseEpisode GetEpisodeById(int episodeId);
+        void EditEpisode(CourseEpisode episode, IFormFile episodeFile);
     }
 }
