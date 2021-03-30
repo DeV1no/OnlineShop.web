@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,6 +23,9 @@ namespace OnlineShop.web.Services.Interface
         Course GetCourseById(int courseId);
 
         void UpdateCourse(Course course, IFormFile imgCourse, IFormFile courseDemo);
+
+      Tuple<List<ShowCourseListItemViewModel>,int> GetCourse(int pageId = 1, string filter = "", string getType = "all",
+            string orderByType = "date", int startPirce = 0, int endPrice = 0, List<int> selectedGroups = null,int take=0);
 
         //Episode
         List<CourseEpisode> GetListEpisode(int courseId);

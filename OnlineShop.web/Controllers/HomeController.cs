@@ -29,7 +29,7 @@ namespace OnlineShop.web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(_courseSerervice.GetCourse());
         }
 
         [Route("OnlinePayment/{id}")]

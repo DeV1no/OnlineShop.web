@@ -206,6 +206,91 @@ namespace OnlineShop.web.Services
             _context.SaveChanges();
         }
 
+        public  Tuple<List<ShowCourseListItemViewModel>,int> GetCourse(int pageId = 1, string filter = ""
+            , string getType = "all", string orderByType = "date",
+            int startPrice = 0, int endPrice = 0, List<int> selectedGroups = null, int take = 0)
+        {
+            if (take == 0)
+                take = 8;
+
+            IQueryable<Course> result = _context.Courses;
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                result = result.Where(c => c.CourseTitle.Contains(filter));
+            }
+
+            switch (getType)
+            {
+                case "all":
+                    break;
+                case "buy":
+                {
+                    result = result.Where(c => c.CoursePrice != 0);
+                    break;
+                }
+                case "free":
+                {
+                    result = result.Where(c => c.CoursePrice == 0);
+                    break;
+                }
+            }
+
+            switch (orderByType)
+            {
+                case "date":
+                {
+                    result = result.OrderByDescending(c => c.CreateDate);
+                    break;
+                }
+                case "updatedate":
+                {
+                    result = result.OrderByDescending(c => c.UpdateDate);
+                    break;
+                }
+            }
+
+            if (startPrice > 0)
+            {
+                result = result.Where(c => c.CoursePrice > startPrice);
+            }
+
+            if (endPrice > 0)
+            {
+                result = result.Where(c => c.CoursePrice < startPrice);
+            }
+
+
+            if (selectedGroups != null && selectedGroups.Any())
+            {
+                foreach (var groupId in selectedGroups)
+                {
+                    result = result.Where(c => c.GroupId == groupId || c.SubGroup == groupId);
+                }
+            }
+
+            int skip = (pageId - 1) * take;
+            int pageCount = result.Include(c => c.CourseEpisodes).Select(c => new ShowCourseListItemViewModel()
+            {
+                CourseId = c.CourseId,
+                ImageName = c.CourseImageName,
+                Price = c.CoursePrice,
+                Title = c.CourseTitle,
+                TotalTime = new TimeSpan(20)
+                //     new TimeSpan(c.CourseEpisodes.Sum(e => e.EpisodeTime.Ticks))
+            }).Count()/take;
+           var query= result.Include(c => c.CourseEpisodes).Select(c => new ShowCourseListItemViewModel()
+            {
+                CourseId = c.CourseId,
+                ImageName = c.CourseImageName,
+                Price = c.CoursePrice,
+                Title = c.CourseTitle,
+                TotalTime = new TimeSpan(20)
+                //     new TimeSpan(c.CourseEpisodes.Sum(e => e.EpisodeTime.Ticks))
+            }).Skip(skip).Take(take).ToList();
+           return Tuple.Create(query, pageCount);
+        }
+
         public List<CourseEpisode> GetListEpisode(int courseId)
         {
             return _context.CourseEpisodes.Where(e => e.CourseId == courseId).ToList();
