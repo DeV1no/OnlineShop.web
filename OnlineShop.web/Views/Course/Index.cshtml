@@ -32,14 +32,7 @@
                 </header>
 
                 <div class="row">
-                    <div class="col-md-4 col-sm-12 col-xs-12 pull-right">
-                        <div class="input">
-                            <input type="text" name="filter" placeholder="موضوع مورد نظر ...">
-                            <button>
-                                <i class="zmdi zmdi-search"></i>
-                            </button>
-                        </div>
-                    </div>
+
                     <div class="col-md-4 col-sm-6 col-xs-12 pull-right">
                         <div class="switch-field available">
                             <input id="available-filter-1" name="getType" value="all" checked="" type="radio">
@@ -50,12 +43,20 @@
                             <label for="available-filter-3"> رایگان </label>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12 pull-left">
+                    <div class="col-md-4 col-sm-6 col-xs-12 pull-right">
                         <div class="select-ddl">
                             <select name="orderByType">
                                 <option value="date"> تاریخ انتشار </option>
                                 <option value="updatedate"> تاریخ بروز رسانی </option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12 pull-left">
+                        <div class="row">
+                            <input type="text" name="filter" class="form-control col-md-10" placeholder="موضوع مورد نظر ...">
+                            <button class="d-flex btn btn-success btn-sm">
+                                <i class="zmdi zmdi-search "></i>
+                            </button>
                         </div>
                     </div>
                 </div>
