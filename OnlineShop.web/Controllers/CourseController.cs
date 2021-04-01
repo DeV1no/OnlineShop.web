@@ -24,5 +24,17 @@ namespace OnlineShop.web.Controllers
             return View(_courseSerervice.GetCourse(pageId, filter, getType, orderByType, startPrice, endPrice,
                 selectedGroups, 9));
         }
+
+        [Route("ShowCourse/{id}")]
+        public IActionResult ShowCourse(int id)
+        {
+            var course = _courseSerervice.GetCourseForShow(id);
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            return View(course);
+        }
     }
 }
