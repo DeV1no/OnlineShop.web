@@ -206,7 +206,7 @@ namespace OnlineShop.web.Services
             _context.SaveChanges();
         }
 
-        public  Tuple<List<ShowCourseListItemViewModel>,int> GetCourse(int pageId = 1, string filter = ""
+        public Tuple<List<ShowCourseListItemViewModel>, int> GetCourse(int pageId = 1, string filter = ""
             , string getType = "all", string orderByType = "date",
             int startPrice = 0, int endPrice = 0, List<int> selectedGroups = null, int take = 0)
         {
@@ -217,7 +217,7 @@ namespace OnlineShop.web.Services
 
             if (!string.IsNullOrEmpty(filter))
             {
-                result = result.Where(c => c.CourseTitle.Contains(filter));
+                result = result.Where(c => c.CourseTitle.Contains(filter) || c.Tags.Contains(filter));
             }
 
             switch (getType)
@@ -278,8 +278,8 @@ namespace OnlineShop.web.Services
                 Title = c.CourseTitle,
                 TotalTime = new TimeSpan(20)
                 //     new TimeSpan(c.CourseEpisodes.Sum(e => e.EpisodeTime.Ticks))
-            }).Count()/take;
-           var query= result.Include(c => c.CourseEpisodes).Select(c => new ShowCourseListItemViewModel()
+            }).Count() / take;
+            var query = result.Include(c => c.CourseEpisodes).Select(c => new ShowCourseListItemViewModel()
             {
                 CourseId = c.CourseId,
                 ImageName = c.CourseImageName,
@@ -288,7 +288,17 @@ namespace OnlineShop.web.Services
                 TotalTime = new TimeSpan(20)
                 //     new TimeSpan(c.CourseEpisodes.Sum(e => e.EpisodeTime.Ticks))
             }).Skip(skip).Take(take).ToList();
-           return Tuple.Create(query, pageCount);
+            return Tuple.Create(query, pageCount);
+        }
+
+        public Course GetCourseForShow(int courseId)
+        {
+            return _context.Courses
+                .Include(e => e.CourseEpisodes)
+                .Include(c => c.CourseStatus)
+                .Include(c => c.CourseLevel).Include(c => c.User)
+                .FirstOrDefault(c => c.CourseId == courseId);
+            ;
         }
 
         public List<CourseEpisode> GetListEpisode(int courseId)

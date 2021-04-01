@@ -27,6 +27,8 @@ namespace OnlineShop.web.Services.Interface
       Tuple<List<ShowCourseListItemViewModel>,int> GetCourse(int pageId = 1, string filter = "", string getType = "all",
             string orderByType = "date", int startPirce = 0, int endPrice = 0, List<int> selectedGroups = null,int take=0);
 
+      Course GetCourseForShow(int courseId);
+
         //Episode
         List<CourseEpisode> GetListEpisode(int courseId);
         int AddEpisode(CourseEpisode episode, IFormFile episodeFile);
