@@ -5,27 +5,23 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using OnlineShop.DataLayer.Entities.User;
+using OnlineShop.web.Entities.Order;
 
 namespace OnlineShop.web.Entities.Course
 {
     public class Course
     {
-        [Key]
-        public int CourseId { get; set; }
+        [Key] public int CourseId { get; set; }
 
-        [Required]
-        public int GroupId { get; set; }
+        [Required] public int GroupId { get; set; }
 
         public int? SubGroup { get; set; }
 
-        [Required]
-        public int TeacherId { get; set; }
+        [Required] public int TeacherId { get; set; }
 
-        [Required]
-        public int StatusId { get; set; }
+        [Required] public int StatusId { get; set; }
 
-        [Required]
-        public int LevelId { get; set; }
+        [Required] public int LevelId { get; set; }
 
         [Display(Name = "عنوان دوره")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
@@ -40,37 +36,30 @@ namespace OnlineShop.web.Entities.Course
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public int CoursePrice { get; set; }
 
-        [MaxLength(600)]
-        public string Tags { get; set; }
+        [MaxLength(600)] public string Tags { get; set; }
 
-        [MaxLength(50)]
-        public string CourseImageName { get; set; }
+        [MaxLength(50)] public string CourseImageName { get; set; }
 
-        [MaxLength(100)]
-        public string DemoFileName { get; set; }
+        [MaxLength(100)] public string DemoFileName { get; set; }
 
-        [Required]
-        public DateTime CreateDate { get; set; }
+        [Required] public DateTime CreateDate { get; set; }
 
         public DateTime? UpdateDate { get; set; }
 
 
         #region Relations
 
-        [ForeignKey("TeacherId")]
-        public User User { get; set; }
+        [ForeignKey("TeacherId")] public User User { get; set; }
 
-        [ForeignKey("GroupId")]
-        public CourseGroup CourseGroup { get; set; }
+        [ForeignKey("GroupId")] public CourseGroup CourseGroup { get; set; }
 
-       [ForeignKey("SubGroup")]
-        public CourseGroup Group { get; set; }
-        [ForeignKey("StatusId")]
-        public CourseStatus CourseStatus { get; set; }
-        [ForeignKey("LevelId")]
-        public CourseLevel CourseLevel { get; set; }
+        [ForeignKey("SubGroup")] public CourseGroup Group { get; set; }
+        [ForeignKey("StatusId")] public CourseStatus CourseStatus { get; set; }
+        [ForeignKey("LevelId")] public CourseLevel CourseLevel { get; set; }
 
         public List<CourseEpisode> CourseEpisodes { get; set; }
+        public List<OrderDetail> OrderDetails { get; set; }
+        public List<UserCourse> UserCourse { get; set; }
         #endregion
     }
 }

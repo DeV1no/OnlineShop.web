@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.DataLayer.Entities.User;
 using OnlineShop.web.Entities.Course;
+using OnlineShop.web.Entities.Order;
 using OnlineShop.web.Entities.Permissions;
 using OnlineShop.web.Entities.Wallet;
 
@@ -42,6 +43,14 @@ namespace OnlineShop.DataLayer.Context
         public DbSet<CourseStatus> CourseStatuses { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseEpisode> CourseEpisodes { get; set; }
+        public DbSet<UserCourse> UserCourses { get; set; }
+
+        #endregion
+
+        #region Order
+
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
 
         #endregion
 

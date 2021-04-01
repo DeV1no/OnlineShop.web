@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.web.Services.Interface;
 
@@ -7,10 +8,12 @@ namespace OnlineShop.web.Controllers
     public class CourseController : Controller
     {
         private ICourseSerervice _courseSerervice;
+        private IOrderService _orderService;
 
-        public CourseController(ICourseSerervice courseSerervice)
+        public CourseController(ICourseSerervice courseSerervice, IOrderService orderService)
         {
             _courseSerervice = courseSerervice;
+            _orderService = orderService;
         }
 
         public IActionResult Index(int pageId = 1, string filter = ""
@@ -35,6 +38,13 @@ namespace OnlineShop.web.Controllers
             }
 
             return View(course);
+        }
+
+        [Authorize]
+        public ActionResult BuyCourse(int id)
+        {
+            int orderId = _orderService.AddOrder(User.Identity.Name, id);
+            return Redirect("/UserPanel/MyOrders/ShowOrder/" + orderId);
         }
     }
 }

@@ -1,0 +1,119 @@
+@using OnlineShop.web.Services.Interface
+@model OnlineShop.web.Entities.Order.Order
+@inject IUserService _userService
+@{
+    ViewBag.Title = "صورت حساب شما";
+    int sumOrder = Model.OrderDetails.Sum(od => od.Price * od.Count);
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">آنلاین شاپ</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page"> صورت حساب شما </li>
+        </ul>
+    </nav>
+</div>
+
+<main>
+    <div class="container">
+        <div class="user-account">
+            <div class="row">
+                <partial name="_SideBar"/>
+                <div class="col-md-9 col-sm-8 col-xs-12">
+                    <section class="user-account-content">
+                        <header>
+                            <h1> صورت حساب </h1>
+
+                        </header>
+                        @if (ViewBag.finaly == true)
+                        {
+                            <div class="alert alert-success">
+                                فاکتور با موفقیت پرداخت گردید
+                            </div>
+                        }
+                        <table class="table table-responsive table-bordered table-condensed">
+                            <thead >
+                            <tr>
+                                <th>دوره</th>
+                                <th>تعداد</th>
+                                <th>قیمت</th>
+                                <th>جمع</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var item in Model.OrderDetails)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="/show/course/@item.CourseId" target="_blank">
+                                            @item.Course.CourseTitle
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @item.Count
+                                    </td>
+                                    <td>
+                                        @item.Price
+                                    </td>
+                                    <td>
+                                        @((item.Count * item.Price).ToString("#,0"))
+                                    </td>
+                                </tr>
+                            }
+                            @if (!Model.IsFinaly)
+                            {
+                                <tr>
+                                    <td> کد تخفیف</td>
+                                    <td colspan="4" style="padding: 1rem">
+                                        <input type="text" class="form-control">
+                                        <input type="submit" class="btn btn-primary btn-block" value="اعمال کد تخفیف" style="margin-top: 5px">
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+                                <td colspan="2" class="text-right">جمع کل</td>
+
+                                <td colspan="2" class="text-left  text-success" style="margin-left: 2rem ">
+                                    @(sumOrder)
+                                    تومان
+                                </td>
+                            </tr>
+                            @if (!Model.IsFinaly)
+                            {
+                                <tr>
+                                    <td colspan="2" class="text-right"></td>
+
+                                    <td colspan="2" class="text-left  text-success" style="margin-left:2rem ">
+                                        @if (_userService.BalanceUserWallet(User.Identity.Name) >= sumOrder)
+                                        {
+                                            <a href="/UserPanel/MyOrders/FinallyOrder/@Model.OrderId" class="btn btn-success btn-block">
+                                                تایید پرداخت
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="" class="btn btn-success btn-block" disabled>
+                                                تایید پرداخت
+                                            </a>
+                                            <div class="alert alert-danger text-right" style="margin-bottom: 5px; margin-top: 10px">
+                                                موجودی کافی نیست
+                                                لطفا از طریق این
+                                                <a href="/userPanel/Wallet">لینک</a>
+                                                حساب خود را شارژ کنید
+                                            </div>
+                                        }
+
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

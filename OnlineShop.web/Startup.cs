@@ -51,6 +51,7 @@ namespace OnlineShop.web
             services.AddTransient<IViewRenderService, RenderViewToString>();
             services.AddTransient<IPermisionService, PermisionService>();
             services.AddTransient<ICourseSerervice, CourseSerervice>();
+            services.AddTransient<IOrderService, OrderService>();
 
             #endregion
 
@@ -72,7 +73,7 @@ namespace OnlineShop.web
             #endregion
 
             //File largleantgh upload
-        //    services.Configure<FormOptions>(options => { options.MultipartBodyLengthLimit = 600000; });
+            //    services.Configure<FormOptions>(options => { options.MultipartBodyLengthLimit = 600000; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

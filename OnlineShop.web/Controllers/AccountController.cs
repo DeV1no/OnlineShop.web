@@ -36,7 +36,7 @@ namespace OnlineShop.web.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public IActionResult Login(AccountViewModel.LoginViewModel login)
+        public IActionResult Login(AccountViewModel.LoginViewModel login, string ReturnUrl = "/")
         {
             if (!ModelState.IsValid)
             {
@@ -61,6 +61,11 @@ namespace OnlineShop.web.Controllers
                     };
                     HttpContext.SignInAsync(principal, properties);
                     ViewBag.IsSuccess = true;
+                    if (ReturnUrl != "/")
+                    {
+                        return Redirect(ReturnUrl);
+                    }
+
                     return Redirect("/");
                 }
                 else
