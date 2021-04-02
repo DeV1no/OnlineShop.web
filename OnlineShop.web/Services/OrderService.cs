@@ -128,5 +128,11 @@ namespace OnlineShop.web.Services
 
             return false;
         }
+
+        public List<Order> GetUserOrders(string userName)
+        {
+            int userId = _userService.GetUserIdByUserName(userName);
+            return _context.Orders.Where(o => o.UserId == userId).ToList();
+        }
     }
 }

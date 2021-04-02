@@ -15,11 +15,11 @@ namespace OnlineShop.web.Areas.UserPanel.Controllers
             _orderedService = orderedService;
         }
 
-        // GET
-        /*public IActionResult Index()
+       //  GET
+        public IActionResult Index()
         {
-            return View();
-        }*/
+            return View(_orderedService.GetUserOrders(User.Identity.Name));
+        }
 
         public IActionResult ShowOrder(int id, bool finaly = false)
         {

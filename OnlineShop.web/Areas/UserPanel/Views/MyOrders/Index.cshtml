@@ -1,0 +1,84 @@
+@using OnlineShop.web.Convertor
+@model IEnumerable<OnlineShop.web.Entities.Order.Order>
+
+@{
+    ViewBag.Title = "صورت حساب ها";
+
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/">آنلاین شاپ</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page"> صورت حساب شما </li>
+        </ul>
+    </nav>
+</div>
+
+<main>
+    <div class="container">
+        <div class="user-account">
+            <div class="row">
+                <partial name="_SideBar"/>
+                <div class="col-md-9 col-sm-8 col-xs-12">
+                    <section class="user-account-content">
+                        <header>
+                            <h1> مشاهده صورت حساب ها </h1>
+
+                        </header>
+
+                        <table class="table table-responsive table-bordered table-condensed">
+                            <thead >
+                            <tr>
+                                <th>شماره فاکتور</th>
+                                <th>تاریخ</th>
+                                <th>جمع</th>
+                                <th>پرداخت</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.OrderId
+                                    </td>
+                                    <td>
+                                        @item.CreateDate.ToShamsi()
+                                    </td>
+                                    <td>
+                                        @item.OrderSum
+                                    </td>
+                                    <td>
+                                        @if (item.IsFinaly)
+                                        {
+                                            <p class="text-success">
+                                                بله
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p class="text-danger">
+                                                خیر
+                                            </p>
+                                        }
+
+                                    </td>
+                                    <td>
+                                        <a href="/Userpanel/MyOrders/showorder/@item.OrderId" class="btn btn-info" style="margin-right: 1rem"> نمایش</a>
+                                    </td>
+                                </tr>
+                            }
+
+
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
