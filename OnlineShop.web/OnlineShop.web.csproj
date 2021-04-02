@@ -23,7 +23,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Areas\MyOrders" />
         <Folder Include="Areas\UserPanel\Pages" />
         <Folder Include="Senders" />
         <Folder Include="wwwroot\AdminContent" />

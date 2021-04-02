@@ -3,7 +3,7 @@
 @inject IUserService _userService
 @{
     ViewBag.Title = "صورت حساب شما";
-    int sumOrder = Model.OrderDetails.Sum(od => od.Price * od.Count);
+    int sumOrder = Model.OrderSum;
 }
 
 <div class="container">
@@ -68,8 +68,11 @@
                                 <tr>
                                     <td> کد تخفیف</td>
                                     <td colspan="4" style="padding: 1rem">
-                                        <input type="text" class="form-control">
-                                        <input type="submit" class="btn btn-primary btn-block" value="اعمال کد تخفیف" style="margin-top: 5px">
+                                        <form action="/userpanel/MyOrders/UseDiscount" method="post">
+                                            <input type="hidden" name="orderid" value="@Model.OrderId">
+                                            <input type="text" name="code" class="form-control">
+                                            <input type="submit" class="btn btn-primary btn-block" value="اعمال کد تخفیف" style="margin-top: 5px">
+                                        </form>
                                     </td>
                                 </tr>
                             }

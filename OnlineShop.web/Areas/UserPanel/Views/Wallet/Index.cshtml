@@ -75,7 +75,10 @@
                                         }
                                     </td>
                                     <td>
-                                        @l.Description
+                                        @{
+                                            string tagHref = "<a href='/Userpanel/MyOrders/showorder/"+l.Description.Replace("فاکتور شما #","")+"' >#</a>";
+                                        }
+                                         @Html.Raw(l.Description.Replace("#", tagHref))
                                     </td>
                                 </tr>
                             }

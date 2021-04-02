@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.DataLayer.Context;
+using OnlineShop.web.DTOs.Order;
 using OnlineShop.web.Entities.Course;
 using OnlineShop.web.Entities.Order;
 using OnlineShop.web.Entities.Wallet;
@@ -92,6 +93,11 @@ namespace OnlineShop.web.Services
                 .FirstOrDefault(o => o.UserId == userId && o.OrderId == orderId);
         }
 
+        public Order GetOrderById(int orderId)
+        {
+            return _context.Orders.Find(orderId);
+        }
+
         public bool FinallyOrder(string userName, int orderId)
         {
             int userId = _userService.GetUserIdByUserName(userName);
@@ -133,6 +139,39 @@ namespace OnlineShop.web.Services
         {
             int userId = _userService.GetUserIdByUserName(userName);
             return _context.Orders.Where(o => o.UserId == userId).ToList();
+        }
+
+        public void UpdateOrder(Order order)
+        {
+            _context.Orders.Update(order);
+            _context.SaveChanges();
+        }
+
+        public DiscountUseType UseDiscount(int orderId, string code)
+        {
+            var discount = _context.Discounts.SingleOrDefault(d => d.DiscountCode == code);
+            if (discount == null)
+                return DiscountUseType.NotFound;
+            if (discount.StartDate != null && discount.StartDate < DateTime.Now)
+                return DiscountUseType.ExpireDate;
+            if (discount.StartDate != null && discount.StartDate > DateTime.Now)
+                return DiscountUseType.ExpireDate;
+            if (discount.DiscountCode != null && discount.UsableCount < 1)
+                return DiscountUseType.Finished;
+
+            var order = GetOrderById(orderId);
+            int percent = (order.OrderSum * discount.Percent) / 100;
+            order.OrderSum = order.OrderSum - percent;
+            UpdateOrder(order);
+
+            if (discount.UsableCount != null)
+            {
+                discount.UsableCount -= 1;
+            }
+
+            _context.Discounts.Update(discount);
+            _context.SaveChanges();
+            return DiscountUseType.Success;
         }
     }
 }

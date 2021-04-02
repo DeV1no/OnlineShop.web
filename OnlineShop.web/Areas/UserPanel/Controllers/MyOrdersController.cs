@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OnlineShop.web.DTOs.Order;
 using OnlineShop.web.Services.Interface;
 
 namespace OnlineShop.web.Areas.UserPanel.Controllers
@@ -15,7 +16,7 @@ namespace OnlineShop.web.Areas.UserPanel.Controllers
             _orderedService = orderedService;
         }
 
-       //  GET
+        //  GET
         public IActionResult Index()
         {
             return View(_orderedService.GetUserOrders(User.Identity.Name));
@@ -39,6 +40,12 @@ namespace OnlineShop.web.Areas.UserPanel.Controllers
             }
 
             return BadRequest();
+        }
+
+        public IActionResult UseDiscount(int orderId, string code)
+        {
+            DiscountUseType type = _orderedService.UseDiscount(orderId, code);
+            return Redirect("/Userpanel/myorders/showorder/" + orderId + "?type=" + type.ToString());
         }
     }
 }
