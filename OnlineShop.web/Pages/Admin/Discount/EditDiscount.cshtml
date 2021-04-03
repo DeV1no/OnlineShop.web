@@ -1,0 +1,88 @@
+@page "{id}"
+@using OnlineShop.web.Convertor
+@model OnlineShop.web.Pages.Admin.Discount.EditDiscount
+
+@{
+    ViewData["Title"] = "ویرایش کد تخفیف";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h2 class="page-header">
+            ویرایش کد
+        </h2>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<div class="row">
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Discount.DiscountId">
+        <div class="col-md-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    کد تخفیف
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>کد تخفیف</label>
+                                <input type="text" asp-for="Discount.DiscountCode" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>درصد کد تخفیف</label>
+                                <input type="text" asp-for="Discount.Percent" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>تعداد استفاده</label>
+                                <input type="text" asp-for="Discount.UsableCount" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>تاریخ شروع</label>
+                                <input id="stDate" name="stDate"
+                                       value="@((Model.Discount.StartDate != null) ? Model.Discount.StartDate.Value.ToShamsi() : "")">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>تاریخ پایان</label>
+                                <input id="edDate" name="edDate"
+                                       value="@((Model.Discount.EndDate != null) ? Model.Discount.EndDate.Value.ToShamsi() : "")">
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" value="ذخیره اطلاعات" class="btn btn-success pull-left mr-auto"/>
+                    <a href="/admin/Discount" class="btn btn-danger pull-left mr-auto">بازگشت</a>
+
+                </div>
+                <!-- /.panel-body -->
+            </div>
+        </div>
+
+    </form>
+</div>
+
+@section Scripts
+{
+    <link href="http://cdn.kendostatic.com/2013.2.918/styles/kendo.common.min.css" rel="stylesheet"/>
+    <link href="http://cdn.kendostatic.com/2013.2.918/styles/kendo.default.min.css" rel="stylesheet"/>
+
+    <script src="/js/kendo.all.min.js"></script>
+    <script>
+                // create DatePicker from input HTML element
+                $("#stDate").kendoDatePicker();
+            $("#edDate").kendoDatePicker();
+        </script>
+}

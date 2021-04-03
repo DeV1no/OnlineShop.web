@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.web.Services.Interface;
@@ -45,6 +46,31 @@ namespace OnlineShop.web.Controllers
         {
             int orderId = _orderService.AddOrder(User.Identity.Name, id);
             return Redirect("/UserPanel/MyOrders/ShowOrder/" + orderId);
+        }
+
+        [Route("DownloadFile/{episodeId}")]
+        public IActionResult DownloadFile(int episodeId)
+        {
+            var episode = _courseSerervice.GetEpisodeById(episodeId);
+            string filepath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/courseFiles",
+                episode.EpisodeFileName);
+            string fileName = episode.EpisodeFileName;
+            if (episode.IsFree)
+            {
+                byte[] file = System.IO.File.ReadAllBytes(filepath);
+                return File(file, "application/force-download", fileName);
+            }
+
+            if (User.Identity.IsAuthenticated)
+            {
+                if (_orderService.isUserInCourse(User.Identity.Name, episode.CourseId))
+                {
+                    byte[] file = System.IO.File.ReadAllBytes(filepath);
+                    return File(file, "application/force-download", fileName);
+                }
+            }
+
+            return Forbid();
         }
     }
 }

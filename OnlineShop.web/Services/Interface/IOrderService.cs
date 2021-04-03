@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using OnlineShop.web.DTOs.Order;
 using OnlineShop.web.Entities.Order;
+using ZarinpalSandbox;
 
 namespace OnlineShop.web.Services.Interface
 {
@@ -17,5 +18,11 @@ namespace OnlineShop.web.Services.Interface
 
         // Discount
         DiscountUseType UseDiscount(int orderId, string code);
+        void AddDiscount(Discount discount);
+        List<Discount> GetAllDiscount();
+        Discount GetDiscountById(int discountId);
+        void UpdateDiscount(Discount discount);
+        bool IsExistCode(string code);
+        bool isUserInCourse(string userName, int courseId);
     }
 }

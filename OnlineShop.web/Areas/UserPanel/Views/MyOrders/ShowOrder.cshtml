@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "صورت حساب شما";
     int sumOrder = Model.OrderSum;
+    string dicountType = ViewBag.typeDiscount.ToString();
 }
 
 <div class="container">
@@ -48,7 +49,7 @@
                             {
                                 <tr>
                                     <td>
-                                        <a href="/show/course/@item.CourseId" target="_blank">
+                                        <a href="/showcourse/@item.CourseId" target="_blank">
                                             @item.Course.CourseTitle
                                         </a>
                                     </td>
@@ -73,6 +74,57 @@
                                             <input type="text" name="code" class="form-control">
                                             <input type="submit" class="btn btn-primary btn-block" value="اعمال کد تخفیف" style="margin-top: 5px">
                                         </form>
+                                        @if (dicountType != "")
+                                        {
+                                            switch (dicountType)
+                                            {
+                                                case "Success":
+                                                {
+                                                    <div class="alert alert-success">
+                                                        <p class="text-muted">
+                                                            کد با موفقیت اعمال شد
+                                                        </p>
+                                                    </div>
+                                                    break;
+                                                }
+                                                case "ExpireDate":
+                                                {
+                                                    <div class="alert alert-danger">
+                                                        <p class="text-muted">
+                                                            تاریخ کد به اتمام رسیده است
+                                                        </p>
+                                                    </div>
+                                                    break;
+                                                }
+                                                case "NotFound":
+                                                {
+                                                    <div class="alert alert-warning">
+                                                        <p class="text-muted">
+                                                            کد معتبر نیست
+                                                        </p>
+                                                    </div>
+                                                    break;
+                                                }
+                                                case "Finished":
+                                                {
+                                                    <div class="alert alert-danger">
+                                                        <p class="text-muted">
+                                                            کد به اتمام رسیده است
+                                                        </p>
+                                                    </div>
+                                                    break;
+                                                }
+                                                case "UserUsed":
+                                                {
+                                                    <div class="alert alert-danger">
+                                                        <p class="text-muted">
+                                                            این کد پیشتر توسط شما استفاده شده است
+                                                        </p>
+                                                    </div>
+                                                    break;
+                                                }
+                                            }
+                                        }
                                     </td>
                                 </tr>
                             }

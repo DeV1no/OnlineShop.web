@@ -22,12 +22,12 @@ namespace OnlineShop.web.Areas.UserPanel.Controllers
             return View(_orderedService.GetUserOrders(User.Identity.Name));
         }
 
-        public IActionResult ShowOrder(int id, bool finaly = false)
+        public IActionResult ShowOrder(int id, bool finaly = false,string type="")
         {
             var order = _orderedService.GetOrderGorUserPanle(User.Identity.Name, id);
             if (order == null)
                 return NotFound();
-
+            ViewBag.typeDiscount = type;
             ViewBag.finaly = finaly;
             return View(order);
         }

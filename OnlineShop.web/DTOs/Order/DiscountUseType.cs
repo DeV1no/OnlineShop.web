@@ -5,6 +5,8 @@ namespace OnlineShop.web.DTOs.Order
         Success,
         ExpireDate,
         NotFound,
-        Finished
+        Finished,
+        UserUsed
+        
     }
 }

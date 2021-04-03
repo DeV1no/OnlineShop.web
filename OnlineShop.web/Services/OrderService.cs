@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.DataLayer.Context;
+using OnlineShop.DataLayer.Entities.User;
 using OnlineShop.web.DTOs.Order;
 using OnlineShop.web.Entities.Course;
 using OnlineShop.web.Entities.Order;
@@ -160,6 +161,8 @@ namespace OnlineShop.web.Services
                 return DiscountUseType.Finished;
 
             var order = GetOrderById(orderId);
+            if (_context.UserDiscountCodes.Any(d => d.UserId == order.UserId && d.DiscountId == discount.DiscountId))
+                return DiscountUseType.UserUsed;
             int percent = (order.OrderSum * discount.Percent) / 100;
             order.OrderSum = order.OrderSum - percent;
             UpdateOrder(order);
@@ -170,8 +173,47 @@ namespace OnlineShop.web.Services
             }
 
             _context.Discounts.Update(discount);
+            _context.UserDiscountCodes.Add(new UserDiscountCode()
+            {
+                UserId = order.UserId,
+                DiscountId = discount.DiscountId,
+            });
             _context.SaveChanges();
             return DiscountUseType.Success;
+        }
+
+        public void AddDiscount(Discount discount)
+        {
+            _context.Discounts.Add(discount);
+            _context.SaveChanges();
+        }
+
+        public List<Discount> GetAllDiscount()
+        {
+            return _context.Discounts.ToList();
+        }
+
+        public Discount GetDiscountById(int discountId)
+        {
+            var discount = _context.Discounts.Find(discountId);
+            return discount;
+        }
+
+        public void UpdateDiscount(Discount discount)
+        {
+            _context.Discounts.Update(discount);
+            _context.SaveChanges();
+        }
+
+        public bool IsExistCode(string code)
+        {
+            return _context.Discounts.Any(d => d.DiscountCode == code);
+        }
+
+        public bool isUserInCourse(string userName, int courseId)
+        {
+            int userId = _userService.GetUserIdByUserName(userName);
+            return _context.UserCourses.Any(c => c.UserId == userId && c.CourseId == courseId);
         }
     }
 }
