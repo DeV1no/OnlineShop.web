@@ -45,7 +45,8 @@ namespace OnlineShop.DataLayer.Entities.User
         public virtual List<Course> Course { get; set; }
         public virtual List<Order> Orders { get; set; }
         public virtual List<UserCourse> UserCourse { get; set; }
-        public List<UserDiscountCode> UserDiscountCodes { get; set; }
+        public virtual List<UserDiscountCode> UserDiscountCodes { get; set; }
+        public virtual List<CourseComment> CourseComments { get; set; }
 
         #endregion
     }

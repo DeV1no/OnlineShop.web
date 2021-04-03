@@ -356,5 +356,29 @@ namespace OnlineShop.web.Services
             _context.CourseEpisodes.Update(episode);
             _context.SaveChanges();
         }
+
+        public void AddComments(CourseComment comment)
+        {
+            _context.CourseComments.Add(comment);
+            _context.SaveChanges();
+        }
+
+        public Tuple<List<CourseComment>, int> GetCoruseComment(int courseId, int pageId = 1)
+        {
+            int take = 5;
+            int skip = (pageId - 1) * take;
+            int pageCount = _context.CourseComments.Where(c => !c.IsDelete && c.CourseId == courseId).Count() / take;
+            if ((pageCount % 2) != 0)
+            {
+                pageId++;
+            }
+            return Tuple.Create(_context.CourseComments
+                .Include(c => c.User)
+                .Where(c => !c.IsDelete && c.CourseId == courseId)
+                .Skip(skip)
+                .Take(take)
+                .OrderByDescending(c => c.CreatedDate)
+                .ToList(), pageCount);
+        }
     }
 }

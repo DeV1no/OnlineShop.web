@@ -60,6 +60,8 @@ namespace OnlineShop.web.Entities.Course
         public List<CourseEpisode> CourseEpisodes { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
         public List<UserCourse> UserCourse { get; set; }
+        public List<CourseComment> CourseComments { get; set; }
+
         #endregion
     }
 }

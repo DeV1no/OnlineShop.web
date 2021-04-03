@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShop.DataLayer.Context;
 
 namespace OnlineShop.web.Migrations
 {
     [DbContext(typeof(OnlineShopeContext))]
-    partial class OnlineShopeContextModelSnapshot : ModelSnapshot
+    [Migration("20210403104652_commentTBL")]
+    partial class commentTBL
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,11 +194,11 @@ namespace OnlineShop.web.Migrations
                         .HasMaxLength(700)
                         .HasColumnType("varchar(700) CHARACTER SET utf8mb4");
 
+                    b.Property<DateTime>("CourseDate")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<bool>("IsAdminRead")
                         .HasColumnType("tinyint(1)");
