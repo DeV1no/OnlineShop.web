@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,8 +25,12 @@ namespace OnlineShop.web.Pages.Admin.Courses
             Course = _courseSerervice.GetCourseById(id);
             var groups = _courseSerervice.GetGroupForManageCourse();
             ViewData["Groups"] = new SelectList(groups, "Value", "Text", Course.GroupId);
-
-            var subgroups = _courseSerervice.GetSubGroupForManageCourse(int.Parse(groups.First().Value));
+            List<SelectListItem> subgroup = new List<SelectListItem>()
+            {
+                new SelectListItem() {Text = "انتخاب کنید",Value = ""}
+            };
+            subgroup.AddRange(_courseSerervice.GetSubGroupForManageCourse(Course.GroupId));
+            var subgroups = _courseSerervice.GetSubGroupForManageCourse(Course.GroupId);
             ViewData["SubGroups"] = new SelectList(subgroups, "Value", "Text", Course.SubGroup ?? 0);
             var teachers = _courseSerervice.GetTeachers();
             ViewData["Teachers"] = new SelectList(teachers, "Value", "Text", Course.TeacherId);

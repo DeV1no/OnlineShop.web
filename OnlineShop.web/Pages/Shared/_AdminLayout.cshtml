@@ -1,3 +1,6 @@
+@using OnlineShop.web.Services.Interface
+@inject IPermisionService _PermisionService
+
 <!DOCTYPE html>
 <html>
 
@@ -58,6 +61,26 @@
                     </li>
                     <li>
                         <a href="/Admin"><i class="fa fa-dashboard fa-fw"></i> پنل ادمین</a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-group"></i>
+                            دسته بندی ها<span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            @*@if (!_PermisionService.UserCheckPermission(_permissionId, userName))
+                            {
+                            context.Result = new RedirectResult("/");
+*@
+                            <li>
+                                <a href="/admin/coursegroup">لیست گروه ها</a>
+                            </li>
+                            <li>
+                                <a href="/admin/coursegroup/creategroup">افزودن گروه</a>
+                            </li>
+                            @*}*@
+                        </ul>
+                        <!-- /.nav-second-level -->
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> مدیریت کاربران<span class="fa arrow"></span></a>

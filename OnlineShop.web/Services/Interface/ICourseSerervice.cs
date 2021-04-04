@@ -16,7 +16,10 @@ namespace OnlineShop.web.Services.Interface
         List<SelectListItem> GetTeachers();
         List<SelectListItem> GetLevels();
         List<SelectListItem> GetStatus();
+        void AddGroup(CourseGroup group);
+        void UpdateGroup(CourseGroup group);
 
+        CourseGroup GetGroupById(int groupId);
         // Course
         int AddCourse(Course course, IFormFile imgCourse, IFormFile courseDemo);
         List<ShowCourseForAdminViewModel> GetCoursesForAdmin();

@@ -26,7 +26,7 @@ namespace OnlineShop.web.Services
 
         public List<CourseGroup> GetAllGroup()
         {
-            return _context.CourseGroups.ToList();
+            return _context.CourseGroups.Include(c => c.CourseGroups).ToList();
         }
 
         public List<SelectListItem> GetGroupForManageCourse()
@@ -66,6 +66,23 @@ namespace OnlineShop.web.Services
                 Value = s.StatusId.ToString(),
                 Text = s.StatusTitle
             }).ToList();
+        }
+
+        public void AddGroup(CourseGroup @group)
+        {
+            _context.CourseGroups.Add(group);
+            _context.SaveChanges();
+        }
+
+        public void UpdateGroup(CourseGroup @group)
+        {
+            _context.CourseGroups.Update(group);
+            _context.SaveChanges();
+        }
+
+        public CourseGroup GetGroupById(int groupId)
+        {
+            return _context.CourseGroups.Find(groupId);
         }
 
         public List<SelectListItem> GetLevels()
@@ -372,6 +389,7 @@ namespace OnlineShop.web.Services
             {
                 pageId++;
             }
+
             return Tuple.Create(_context.CourseComments
                 .Include(c => c.User)
                 .Where(c => !c.IsDelete && c.CourseId == courseId)

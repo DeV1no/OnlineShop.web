@@ -1,0 +1,48 @@
+@page "{id}"
+@model OnlineShop.web.Pages.Admin.CourseGroup.EditGroup
+
+@{
+    ViewData["Title"] = "ویرایش گروه";
+}
+<div class="row">
+    <div class="col-lg-12">
+        <h2 class="page-header">
+           ویرایش گروه
+        </h2>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<div class="row">
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="CourseGroups.ParentId">
+        <input type="hidden" asp-for="CourseGroups.GroupId">
+        <div class="col-md-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    گروه
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>نام گروه</label>
+                                <input type="text" asp-for="CourseGroups.GroupTitle" class="form-control">
+
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="margin-top: 2.5rem">
+                            <input type="submit" value="ذخیره اطلاعات" class="btn btn-success pull-left mr-auto"/>
+                            <a href="/admin/CourseGroup" class="btn btn-danger pull-left mr-auto">بازگشت</a>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- /.panel-body -->
+            </div>
+        </div>
+
+    </form>
+</div>
