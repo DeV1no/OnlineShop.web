@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using OnlineShop.DataLayer.Entities.User;
 using OnlineShop.web.Entities.Order;
+using OnlineShop.web.Views.Course;
 
 namespace OnlineShop.web.Entities.Course
 {
@@ -61,6 +62,7 @@ namespace OnlineShop.web.Entities.Course
         public List<OrderDetail> OrderDetails { get; set; }
         public List<UserCourse> UserCourse { get; set; }
         public List<CourseComment> CourseComments { get; set; }
+        public List<CourseVote> CourseVotes { get; set; }
 
         #endregion
     }

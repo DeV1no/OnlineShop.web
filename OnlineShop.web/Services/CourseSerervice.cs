@@ -12,6 +12,7 @@ using OnlineShop.web.Entities.Course;
 using OnlineShop.web.Generrator;
 using OnlineShop.web.Security;
 using OnlineShop.web.Services.Interface;
+using OnlineShop.web.Views.Course;
 
 namespace OnlineShop.web.Services
 {
@@ -320,6 +321,12 @@ namespace OnlineShop.web.Services
             ;
         }
 
+        public bool IsFree(int coursId)
+        {
+            return _context.Courses.Where(c => c.CourseId == coursId)
+                .Select(c => c.CoursePrice).First()==0;
+        }
+
         public List<CourseEpisode> GetListEpisode(int courseId)
         {
             return _context.CourseEpisodes.Where(e => e.CourseId == courseId).ToList();
@@ -397,6 +404,35 @@ namespace OnlineShop.web.Services
                 .Take(take)
                 .OrderByDescending(c => c.CreatedDate)
                 .ToList(), pageCount);
+        }
+
+        public void AddVote(int userId, int courseId, bool vote)
+        {
+            var userVote = _context.CourseVotes.FirstOrDefault(c => c.UserId == userId && c.CourseId == courseId);
+            if (userVote != null)
+            {
+                userVote.Vote = vote;
+            }
+            else
+            {
+                userVote = new CourseVote()
+                {
+                    CourseId = courseId,
+                    UserId = userId,
+                    Vote = vote
+                };
+                _context.Add(userVote);
+            }
+
+            _context.SaveChanges();
+        }
+
+        public Tuple<int, int> GetCourseVotes(int courseId)
+        {
+            var votes = _context.CourseVotes.Where(v => v.CourseId == courseId)
+                .Select(v => v.Vote).ToList();
+
+            return Tuple.Create(votes.Count(c => c), votes.Count(c => !c));
         }
     }
 }

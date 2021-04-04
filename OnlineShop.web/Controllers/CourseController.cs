@@ -85,13 +85,32 @@ namespace OnlineShop.web.Controllers
             comment.CreatedDate = DateTime.Now;
             comment.UserId = _userService.GetUserIdByUserName(User.Identity.Name);
             _courseSerervice.AddComments(comment);
-           return View("ShowComment",_courseSerervice.GetCoruseComment(comment.CourseId));
-            
+            return View("ShowComment", _courseSerervice.GetCoruseComment(comment.CourseId));
         }
 
         public IActionResult ShowComment(int id, int pageId = 1)
         {
             return View(_courseSerervice.GetCoruseComment(id, pageId));
+        }
+
+        public IActionResult CourseVote(int Id)
+        {
+            if (
+                !_courseSerervice.IsFree(Id) &&
+                !_orderService.isUserInCourse(User.Identity.Name, Id)
+            )
+            {
+                ViewBag.NotAccess = true;
+            }
+
+            return PartialView(_courseSerervice.GetCourseVotes(Id));
+        }
+
+        [Authorize]
+        public IActionResult AddVote(int id, bool vote)
+        {
+            _courseSerervice.AddVote(_userService.GetUserIdByUserName(User.Identity.Name), id, vote);
+            return PartialView("CourseVote", _courseSerervice.GetCourseVotes(id));
         }
     }
 }

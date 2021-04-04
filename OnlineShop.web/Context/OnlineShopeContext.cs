@@ -5,6 +5,7 @@ using OnlineShop.web.Entities.Course;
 using OnlineShop.web.Entities.Order;
 using OnlineShop.web.Entities.Permissions;
 using OnlineShop.web.Entities.Wallet;
+using OnlineShop.web.Views.Course;
 
 namespace OnlineShop.DataLayer.Context
 {
@@ -46,6 +47,7 @@ namespace OnlineShop.DataLayer.Context
         public DbSet<CourseEpisode> CourseEpisodes { get; set; }
         public DbSet<UserCourse> UserCourses { get; set; }
         public DbSet<CourseComment> CourseComments { get; set; }
+        public DbSet<CourseVote> CourseVotes { get; set; }
 
         #endregion
 

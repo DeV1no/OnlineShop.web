@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using OnlineShop.web.Entities.Course;
 using OnlineShop.web.Entities.Order;
 using OnlineShop.web.Entities.Wallet;
+using OnlineShop.web.Views.Course;
 
 namespace OnlineShop.DataLayer.Entities.User
 {
@@ -47,6 +48,7 @@ namespace OnlineShop.DataLayer.Entities.User
         public virtual List<UserCourse> UserCourse { get; set; }
         public virtual List<UserDiscountCode> UserDiscountCodes { get; set; }
         public virtual List<CourseComment> CourseComments { get; set; }
+        public virtual List<CourseVote> CourseVotes { get; set; }
 
         #endregion
     }

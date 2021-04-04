@@ -20,6 +20,7 @@ namespace OnlineShop.web.Services.Interface
         void UpdateGroup(CourseGroup group);
 
         CourseGroup GetGroupById(int groupId);
+
         // Course
         int AddCourse(Course course, IFormFile imgCourse, IFormFile courseDemo);
         List<ShowCourseForAdminViewModel> GetCoursesForAdmin();
@@ -34,6 +35,7 @@ namespace OnlineShop.web.Services.Interface
 
         Course GetCourseForShow(int courseId);
 
+        bool IsFree(int coursId);
         //Episode
         List<CourseEpisode> GetListEpisode(int courseId);
         int AddEpisode(CourseEpisode episode, IFormFile episodeFile);
@@ -44,5 +46,9 @@ namespace OnlineShop.web.Services.Interface
         // Comments 
         void AddComments(CourseComment comment);
         Tuple<List<CourseComment>, int> GetCoruseComment(int courseId, int pageId = 1);
+
+        // Course Vote
+        void AddVote(int userId, int courseId, bool vote);
+        Tuple<int, int> GetCourseVotes(int courseId);
     }
 }
